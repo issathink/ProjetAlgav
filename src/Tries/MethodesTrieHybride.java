@@ -3,7 +3,7 @@ package Tries;
 public class MethodesTrieHybride {
 
 	/************ Texte a imprime ************/
-	private static String texte = Tools.LireFichier("exemple_base.txt");
+	private static String texte = Tools.LireFichier("exemple_base");
 
 	public static TrieHybride construireTrie() {
 		int i = 0;

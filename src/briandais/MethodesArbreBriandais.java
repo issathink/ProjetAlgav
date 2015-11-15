@@ -31,7 +31,14 @@ public class MethodesArbreBriandais {
 
 		if (mot.equals("")) {
 			System.out.println("Le mot est vide.");
-			return new ArbreBriandais(arbre, null, ArbreBriandais.EPSILON);
+			ArbreBriandais abr = new ArbreBriandais(arbre, null, ArbreBriandais.EPSILON);
+			/*System.out.println("ssssss");
+			afficher(arbre);
+			System.out.println("ssssss");
+			arbre.setFils(abr);
+			afficher(arbre);*/
+			return abr;
+			// return new ArbreBriandais(arbre, null, ArbreBriandais.EPSILON);
 		}
 
 		char c = mot.charAt(0);
@@ -84,8 +91,11 @@ public class MethodesArbreBriandais {
 		} else {
 			System.out.println("= J'insere au meme. content: '" + content
 					+ "' c: '" + c + "'");
-			return new ArbreBriandais(arbre.getSuivant(), insertion(
-					arbre.getFils(), mot.substring(1)), arbre.getContent());
+			ArbreBriandais abr = insertion(arbre.getFils(), mot.substring(1));
+			arbre.setFils(abr);
+			return arbre;
+			//return new ArbreBriandais(arbre.getSuivant(), insertion(
+				//	arbre.getFils(), mot.substring(1)), arbre.getContent());
 		}
 
 		System.out.println("PANIQUE!!! Ce message ne doit pas etre affiche.");
@@ -143,26 +153,26 @@ public class MethodesArbreBriandais {
 	 * Affiche tous les mots de l'arbre.
 	 */
 	public static void afficher(ArbreBriandais arbre) {
-		afficheRec(arbre, "");
+		afficheRec(arbre, "", 0);
 	}
 
-	private static void afficheRec(ArbreBriandais arbre, String pref) {
+	private static void afficheRec(ArbreBriandais arbre, String pref, int niveau) {
 		if (arbre == null) {
 			// System.out.println();
 			return;
 		}
 
-		
-		System.out.print(arbre.getContent() + " ");
+		// System.out.print(arbre.getContent());
 		if (arbre.getContent() == ArbreBriandais.EPSILON) {
-			//System.out.println(pref + ",");
-			pref = "";
-			 System.out.println();
+			// System.out.println();
+			System.out.println(pref.substring(pref.length() - niveau,
+					pref.length()));
 		} else
 			pref += arbre.getContent();
 
-		afficheRec(arbre.getFils(), pref);
-		afficheRec(arbre.getSuivant(), pref);
+		afficheRec(arbre.getFils(), pref, niveau + 1);
+		// pref = "";
+		afficheRec(arbre.getSuivant(), pref, niveau);
 	}
 
 	/*

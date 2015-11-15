@@ -12,9 +12,10 @@ public class BriandaisTest {
 		arbre = MethodesArbreBriandais.insertion(arbre, "hell");
 		arbre = MethodesArbreBriandais.insertion(arbre, "dell");
 		arbre = MethodesArbreBriandais.insertion(arbre, "ell");
-		// arbre = MethodesArbreBriandais.insertion(arbre, "el");
+		arbre = MethodesArbreBriandais.insertion(arbre, "el");
+		
+		
 		MethodesArbreBriandais.afficher(arbre);
-		// System.out.println("A la fin : " + arbre.getContent());
 		// System.out.println(MethodesArbreBriandais.recherche(arbre, "yesm"));
 	}
 

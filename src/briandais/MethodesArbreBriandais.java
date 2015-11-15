@@ -162,11 +162,11 @@ public class MethodesArbreBriandais {
 			return;
 		}
 
-		// System.out.print(arbre.getContent());
+		System.out.print(arbre.getContent());
 		if (arbre.getContent() == ArbreBriandais.EPSILON) {
-			// System.out.println();
-			System.out.println(pref.substring(pref.length() - niveau,
-					pref.length()));
+			 System.out.println();
+			/*System.out.println(pref.substring(pref.length() - niveau,
+					pref.length()));*/
 		} else
 			pref += arbre.getContent();
 

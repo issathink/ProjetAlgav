@@ -47,8 +47,12 @@ public class MethodesArbreBriandais {
 		if (c < content) {
 			System.out.println("< J'insere au debut. content: '" + content
 					+ "' c: '" + c + "'");
-			ArbreBriandais abr = insertion(arbre.getSuivant(), mot);
-			return new ArbreBriandais(arbre, abr.getFils(), abr.getContent());
+			ArbreBriandais abr = construire(mot);
+			abr.setSuivant(arbre.getFils());
+			arbre.setFils(abr);
+			return arbre;
+			// ArbreBriandais abr = insertion(arbre.getSuivant(), mot);
+			// return new ArbreBriandais(arbre, abr.getFils(), abr.getContent());
 		} else if (c > content) {
 			System.out.println("> J'insere apres. content : '" + content
 					+ "' c: " + c + " mot: " + mot);
@@ -162,7 +166,7 @@ public class MethodesArbreBriandais {
 			return;
 		}
 
-		System.out.print(arbre.getContent());
+		System.out.print(arbre.getContent() + " ");
 		if (arbre.getContent() == ArbreBriandais.EPSILON) {
 			 System.out.println();
 			/*System.out.println(pref.substring(pref.length() - niveau,

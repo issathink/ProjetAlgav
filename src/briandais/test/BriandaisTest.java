@@ -12,16 +12,16 @@ public class BriandaisTest {
 
 		ArbreBriandais arbre = MethodesArbreBriandais.insertion(null,
 				list.get(0));
-		/*for (String mot : list) {
+		for (String mot : list) {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
-		}*/
-		
+		}
+		/*
 		arbre = MethodesArbreBriandais.insertion(arbre, "hello");
 		arbre = MethodesArbreBriandais.insertion(arbre, "hell");
 		arbre = MethodesArbreBriandais.insertion(arbre, "dell");
 		arbre = MethodesArbreBriandais.insertion(arbre, "ell");
 		arbre = MethodesArbreBriandais.insertion(arbre, "el");
-		arbre = MethodesArbreBriandais.insertion(arbre, "elle");
+		arbre = MethodesArbreBriandais.insertion(arbre, "elle");*/
 
 		MethodesArbreBriandais.afficher(arbre);
 		// System.out.println(MethodesArbreBriandais.recherche(arbre, "yesm"));

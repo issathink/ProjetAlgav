@@ -2,17 +2,19 @@ package briandais;
 
 /*
  * La structre de l'arbre de la Briandais.
+ * Epsilon est represente par : '!'
  */
 public class ArbreBriandais {
 
 	private ArbreBriandais suivant;
 	private ArbreBriandais fils;
 	private char content;
+	public final static char EPSILON = '!';
 	
 	public ArbreBriandais() {
 		this.suivant = null;
 		this.fils = null;
-		this.content = '\u0000';
+		this.content = '$';
 	}
 
 	public ArbreBriandais(ArbreBriandais suivant, ArbreBriandais fils,

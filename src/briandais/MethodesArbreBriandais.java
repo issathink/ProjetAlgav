@@ -25,81 +25,55 @@ public class MethodesArbreBriandais {
 		}
 
 		if (arbre == null) {
-			System.out.println("L'arbre est vide. construit : " + mot);
 			return construire(mot);
 		}
 
 		if (mot.equals("")) {
-			System.out.println("Le mot est vide.");
-			ArbreBriandais abr = new ArbreBriandais(arbre, null, ArbreBriandais.EPSILON);
-			/*System.out.println("ssssss");
-			afficher(arbre);
-			System.out.println("ssssss");
-			arbre.setFils(abr);
-			afficher(arbre);*/
-			return abr;
-			// return new ArbreBriandais(arbre, null, ArbreBriandais.EPSILON);
+			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(), arbre.getFils(), arbre.getContent());
+			arbre.setContent(ArbreBriandais.EPSILON);
+			arbre.setFils(null);
+			arbre.setSuivant(e);
+			return arbre;
 		}
 
 		char c = mot.charAt(0);
 		char content = arbre.getContent();
 
 		if (c < content) {
-			System.out.println("< J'insere au debut. content: '" + content
-					+ "' c: '" + c + "'");
-			ArbreBriandais abr = construire(mot);
-			abr.setSuivant(arbre.getFils());
+			ArbreBriandais abr = construire(mot.substring(1));
+			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(), arbre.getFils(), content);
+			arbre.setContent(c);
 			arbre.setFils(abr);
+			arbre.setSuivant(e);
 			return arbre;
-			// ArbreBriandais abr = insertion(arbre.getSuivant(), mot);
-			// return new ArbreBriandais(arbre, abr.getFils(), abr.getContent());
 		} else if (c > content) {
-			System.out.println("> J'insere apres. content : '" + content
-					+ "' c: " + c + " mot: " + mot);
 			ArbreBriandais abr = arbre;
 			ArbreBriandais abr2;
 
 			while (abr != null) {
 				if ((abr2 = abr.getSuivant()) == null) {
 					abr.setSuivant(construire(mot));
-					// return new ArbreBriandais(construire(mot), abr.getFils(),
-					// abr.getContent());
 					return arbre;
 				}
 
 				if (abr2.getContent() == c) {
-					System.out.println("Entre 2 egale. content : "
-							+ abr2.getContent() + " c: " + c);
-
 					insertion(abr2.getFils(), mot.substring(1));
 					return arbre;
-					// return new ArbreBriandais(abr2.getSuivant(), insertion(
-					// abr2.getFils(), mot.substring(1)), abr2.getContent());
 				}
 
 				if (abr.getContent() < c && abr2.getContent() > c) {
-					System.out.println("Entre deux. abr.C: " + abr.getContent()
-							+ " abr2.C : " + abr2.getContent());
 					ArbreBriandais tmp = construire(mot);
-					// ArbreBriandais tmp2 = new ArbreBriandais(abr2,
-					// tmp.getFils(), tmp.getContent());
 					abr.setSuivant(tmp);
 					tmp.setSuivant(abr2);
 					return arbre;
-					// return new ArbreBriandais(tmp2, abr.getFils(),
-					// abr.getContent());
 				}
 
 				abr = abr2;
 			}
 		} else {
-			System.out.println("= J'insere au meme. content: '" + content
-					+ "' c: '" + c + "'");
 			ArbreBriandais abr = insertion(arbre.getFils(), mot.substring(1));
 			arbre.setFils(abr);
 			return arbre;
-			//return new ArbreBriandais(arbre.getSuivant(), insertion(
-				//	arbre.getFils(), mot.substring(1)), arbre.getContent());
 		}
 
 		System.out.println("PANIQUE!!! Ce message ne doit pas etre affiche.");
@@ -107,24 +81,18 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Recherche le caractere 'c' dans les noeuds freres de l'arbre. Si un noeud
-	 * a pour contenu 'c' on retourne 0, -1 s'il est plus petit que le tous les
-	 * noeuds
+	 * Compte le nombre de mots de l'arbre.
 	 */
-	public static int rechercheDansFreres(ArbreBriandais arbre, char c) {
-		if (arbre == null)
-			return c;
-
-		char content = arbre.getContent();
-		while (arbre != null) {
-			if (content == c)
-				return 0;
-		}
-
-		if (content == c)
-			return c;
-		return -1;
+	public static int comptageMots(ArbreBriandais arbre) {
+		if(arbre == null)
+			return 0;
+		
+		if(arbre.getContent() == ArbreBriandais.EPSILON)
+			return 1 + comptageMots(arbre.getFils()) + comptageMots(arbre.getSuivant());
+		
+		return comptageMots(arbre.getFils()) + comptageMots(arbre.getSuivant());
 	}
+
 
 	/*
 	 * Recherche 'mot' dans l'arbre. Retourne true si le mot existe false sinon

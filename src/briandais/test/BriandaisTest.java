@@ -15,6 +15,11 @@ public class BriandaisTest {
 		for (String mot : list) {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
+		
+		for (String mot : list) {
+			if(! MethodesArbreBriandais.recherche(arbre, mot)) 
+				System.out.println("false mot " + mot);
+		}
 		/*
 		arbre = MethodesArbreBriandais.insertion(arbre, "hello");
 		arbre = MethodesArbreBriandais.insertion(arbre, "hell");
@@ -23,7 +28,7 @@ public class BriandaisTest {
 		arbre = MethodesArbreBriandais.insertion(arbre, "el");
 		arbre = MethodesArbreBriandais.insertion(arbre, "elle");*/
 
-		MethodesArbreBriandais.afficher(arbre);
+		// MethodesArbreBriandais.afficher(arbre);
 		// System.out.println(MethodesArbreBriandais.recherche(arbre, "yesm"));
 	}
 

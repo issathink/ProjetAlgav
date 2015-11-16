@@ -29,7 +29,8 @@ public class MethodesArbreBriandais {
 		}
 
 		if (mot.equals("")) {
-			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(), arbre.getFils(), arbre.getContent());
+			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(),
+					arbre.getFils(), arbre.getContent());
 			arbre.setContent(ArbreBriandais.EPSILON);
 			arbre.setFils(null);
 			arbre.setSuivant(e);
@@ -41,7 +42,8 @@ public class MethodesArbreBriandais {
 
 		if (c < content) {
 			ArbreBriandais abr = construire(mot.substring(1));
-			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(), arbre.getFils(), content);
+			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(),
+					arbre.getFils(), content);
 			arbre.setContent(c);
 			arbre.setFils(abr);
 			arbre.setSuivant(e);
@@ -76,7 +78,7 @@ public class MethodesArbreBriandais {
 			return arbre;
 		}
 
-		System.out.println("PANIQUE!!! Ce message ne doit pas etre affiche.");
+		System.out.println("Ce message ne doit pas etre affiche.");
 		return null;
 	}
 
@@ -84,15 +86,15 @@ public class MethodesArbreBriandais {
 	 * Compte le nombre de mots de l'arbre.
 	 */
 	public static int comptageMots(ArbreBriandais arbre) {
-		if(arbre == null)
+		if (arbre == null)
 			return 0;
-		
-		if(arbre.getContent() == ArbreBriandais.EPSILON)
-			return 1 + comptageMots(arbre.getFils()) + comptageMots(arbre.getSuivant());
-		
+
+		if (arbre.getContent() == ArbreBriandais.EPSILON)
+			return 1 + comptageMots(arbre.getFils())
+					+ comptageMots(arbre.getSuivant());
+
 		return comptageMots(arbre.getFils()) + comptageMots(arbre.getSuivant());
 	}
-
 
 	/*
 	 * Recherche 'mot' dans l'arbre. Retourne true si le mot existe false sinon
@@ -136,9 +138,11 @@ public class MethodesArbreBriandais {
 
 		System.out.print(arbre.getContent() + " ");
 		if (arbre.getContent() == ArbreBriandais.EPSILON) {
-			 System.out.println();
-			/*System.out.println(pref.substring(pref.length() - niveau,
-					pref.length()));*/
+			System.out.println();
+			/*
+			 * System.out.println(pref.substring(pref.length() - niveau,
+			 * pref.length()));
+			 */
 		} else
 			pref += arbre.getContent();
 

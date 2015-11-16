@@ -33,17 +33,6 @@ public class BriandaisTest {
 					+ MethodesArbreBriandais.recherche(arbre, mot));
 		}
 
-		/*
-		 * arbre = MethodesArbreBriandais.insertion(arbre, "hello"); arbre =
-		 * MethodesArbreBriandais.insertion(arbre, "hell"); arbre =
-		 * MethodesArbreBriandais.insertion(arbre, "dell"); arbre =
-		 * MethodesArbreBriandais.insertion(arbre, "ell"); arbre =
-		 * MethodesArbreBriandais.insertion(arbre, "el"); arbre =
-		 * MethodesArbreBriandais.insertion(arbre, "elle");
-		 */
-
-		// MethodesArbreBriandais.afficher(arbre);
-		// System.out.println(MethodesArbreBriandais.recherche(arbre, "yesm"));
 	}
 
 }

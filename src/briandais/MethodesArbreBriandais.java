@@ -106,7 +106,7 @@ public class MethodesArbreBriandais {
 		if (mot.equals("")) {
 			if (arbre.getContent() == ArbreBriandais.EPSILON)
 				return true;
-			return recherche(arbre.getSuivant(), mot);
+			return  false; // recherche(arbre.getSuivant(), mot);
 		}
 
 		if (arbre.getContent() == mot.charAt(0))
@@ -131,27 +131,15 @@ public class MethodesArbreBriandais {
 	}
 
 	private static void afficheRec(ArbreBriandais arbre, String pref, int niveau) {
-		if (arbre == null) {
-			// System.out.println();
+		if (arbre == null)
 			return;
-		}
 
-		System.out.print(arbre.getContent() + " ");
-		if (arbre.getContent() == ArbreBriandais.EPSILON) {
-			System.out.println();
-			/*
-			 * System.out.println(pref.substring(pref.length() - niveau,
-			 * pref.length()));
-			 */
-		} else
-			pref += arbre.getContent();
+		pref += arbre.getContent();
+		if (arbre.getContent() == ArbreBriandais.EPSILON)
+			System.out.println(pref);
 
-		// afficheRec(arbre.getFils(), pref, niveau + 1);
-		// pref = "";
-		// afficheRec(arbre.getSuivant(), pref, niveau);
-
-		afficheRec (arbre.getFils (), pref.substring(0, niveau+1), niveau+1);
-		afficheRec (arbre.getSuivant(), pref.substring(0, niveau), niveau);
+		afficheRec(arbre.getFils(), pref.substring(0, niveau + 1), niveau + 1);
+		afficheRec(arbre.getSuivant(), pref.substring(0, niveau), niveau);
 
 	}
 

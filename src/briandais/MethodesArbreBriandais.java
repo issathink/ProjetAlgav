@@ -149,6 +149,10 @@ public class MethodesArbreBriandais {
 		afficheRec(arbre.getFils(), pref, niveau + 1);
 		// pref = "";
 		afficheRec(arbre.getSuivant(), pref, niveau);
+
+afficheRec (arbre.getFils (), pref.substring(0, niveau+1), niveau+1);
+afficheRec (arbre.getSuivant(), pref.substring(0, niveau), niveau);
+
 	}
 
 	/*

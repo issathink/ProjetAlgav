@@ -24,15 +24,20 @@ public class BriandaisTest {
 		Set<String> set = new HashSet<String>();
 		set.addAll(list);
 
-		System.out.println("Taille : " + list.size() + ", ComptageMots: "
+		/*System.out.println("Taille : " + list.size() + ", ComptageMots: "
 				+ MethodesArbreBriandais.comptageMots(arbre) + ", Set: "
 				+ set.size());
 
 		for (String mot : list) {
 			System.out.println(mot + " "
 					+ MethodesArbreBriandais.recherche(arbre, mot));
-		}
-
+		}*/
+		
+		// List<String> mots = MethodesArbreBriandais.listeMots(arbre);
+		// System.out.println(mots + "\n" + mots.size());
+		
+		System.out.println("hauteur: " + MethodesArbreBriandais.hauteur(arbre));
+		
 	}
 
 }

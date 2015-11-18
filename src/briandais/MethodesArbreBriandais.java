@@ -1,5 +1,8 @@
 package briandais;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MethodesArbreBriandais {
 
 	/*
@@ -106,7 +109,7 @@ public class MethodesArbreBriandais {
 		if (mot.equals("")) {
 			if (arbre.getContent() == ArbreBriandais.EPSILON)
 				return true;
-			return  false; // recherche(arbre.getSuivant(), mot);
+			return false; // recherche(arbre.getSuivant(), mot);
 		}
 
 		if (arbre.getContent() == mot.charAt(0))
@@ -136,11 +139,114 @@ public class MethodesArbreBriandais {
 
 		pref += arbre.getContent();
 		if (arbre.getContent() == ArbreBriandais.EPSILON)
-			System.out.println(pref);
+			System.out.println(pref.substring(0, pref.length() - 1));
 
 		afficheRec(arbre.getFils(), pref.substring(0, niveau + 1), niveau + 1);
 		afficheRec(arbre.getSuivant(), pref.substring(0, niveau), niveau);
+	}
 
+	/*
+	 * Liste les mots du dictionnaire dans l'ordre alphabetique.
+	 */
+	public static List<String> listeMots(ArbreBriandais arbre) {
+		List<String> mots = new ArrayList<String>();
+		ajoutDansListe(arbre, mots, "", 0);
+
+		return mots;
+	}
+
+	private static void ajoutDansListe(ArbreBriandais arbre, List<String> mots,
+			String pref, int niveau) {
+		if (arbre == null)
+			return;
+
+		pref += arbre.getContent();
+		if (arbre.getContent() == ArbreBriandais.EPSILON) {
+			System.out.println(pref);
+			mots.add(pref.substring(0, pref.length() - 1));
+		}
+
+		ajoutDansListe(arbre.getFils(), mots, pref.substring(0, niveau + 1),
+				niveau + 1);
+		ajoutDansListe(arbre.getSuivant(), mots, pref.substring(0, niveau),
+				niveau);
+	}
+
+	/*
+	 * Compte le nombre de pointeurs vers null.
+	 */
+	public static int comptageNil(ArbreBriandais arbre) {
+		if (arbre == null)
+			return 1;
+		return comptageNil(arbre.getFils()) + comptageNil(arbre.getFils());
+	}
+
+	/*
+	 * La hauteur de l'arbre.
+	 */
+	public static int hauteur(ArbreBriandais arbre) {
+		int h, hMax;
+
+		if (arbre == null)
+			return 0;
+
+		ArbreBriandais abr = arbre.getSuivant();
+
+		if (arbre.getContent() == ArbreBriandais.EPSILON)
+			hMax = hauteur(arbre.getFils());
+		else
+			hMax = 1 + hauteur(arbre.getFils());
+
+		while (abr != null) {
+			if (abr.getContent() == ArbreBriandais.EPSILON)
+				h = hauteur(abr.getFils());
+			else
+				h = 1 + hauteur(abr.getFils());
+			if (h > hMax)
+				hMax = h;
+			abr = abr.getSuivant();
+		}
+
+		return hMax;
+	}
+
+	/*
+	 * Le nombre de mots du dictionnaire dont 'mot' est prefixe.
+	 */
+	public static int prefixe(ArbreBriandais arbre, String mot) {
+		/*
+		 * if (arbre == null) return 0; if(mot.equals("")) return
+		 */
+		return -1;
+	}
+
+	/*
+	 * Profondeur moyenne des feuilles de l'arbre.
+	 */
+	public static int profondeurMoyenne(ArbreBriandais arbre) {
+		String result, tab[];
+		int soe, nb;
+
+		result = nbFeuilleSomme(arbre, 0, 0);
+
+		tab = result.split(";");
+		soe = Integer.parseInt(tab[0]);
+		nb = Integer.parseInt(tab[1]);
+		
+		if (nb > 0)
+			return soe / nb;
+		return 0;
+	}
+
+	private static String nbFeuilleSomme(ArbreBriandais arbre, int somme, int nb) {
+
+		if (arbre == null)
+			return "0;0";
+
+		// if(arbre.getContent() == ArbreBriandais.EPSILON && arbre.getSuivant()
+		// == null)
+		// return (somme+1) + ";" + ()
+		return "0;0";
 	}
 
 	/*

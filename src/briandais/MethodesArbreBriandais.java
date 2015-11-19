@@ -123,7 +123,31 @@ public class MethodesArbreBriandais {
 	 * nouvel arbre sans 'mot'.
 	 */
 	public static ArbreBriandais suppression(ArbreBriandais arbre, String mot) {
-		return null;
+		if(arbre == null)
+			return null;
+		
+		if (mot.equals("") && arbre.getContent() == ArbreBriandais.EPSILON)
+			if (arbre.getSuivant() == null)
+				return null;
+			else
+				return arbre.getSuivant();
+		else if(mot.equals("")) // Le mot a supprimer n'existe pas
+			return arbre;
+		
+		ArbreBriandais abr;
+		char c = mot.charAt(0);
+		char content = arbre.getContent();
+
+		if (content < c) {
+			abr = suppression(arbre.getSuivant(), mot);
+			arbre.setSuivant(abr);
+			return arbre;
+		} else {
+			abr = suppression(arbre.getFils(), mot.substring(1));
+			arbre.setFils(abr);
+			return arbre;
+		}
+
 	}
 
 	/*
@@ -232,7 +256,7 @@ public class MethodesArbreBriandais {
 		tab = result.split(";");
 		soe = Integer.parseInt(tab[0]);
 		nb = Integer.parseInt(tab[1]);
-		
+
 		if (nb > 0)
 			return soe / nb;
 		return 0;

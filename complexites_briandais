@@ -1,0 +1,10 @@
+1- Recherche(arbre, mot) : O(hauteur de l'arbre), mesure: nombre de comparaison de caracters.
+2- ComptageMots(arbre) : 
+3- ListeMors(arbre) :
+4- ComptageNil(Arbre) : 
+5- Hauteur(arbre) : 
+6- ProfondeurMoyenne(arbre) :
+7- Prefixe(arbre, mot) : 
+8- Suppression(arbre, mot) : 
+9- Fusion(arbre1, arbre2) :
+10- BriandaisVersHybride(arbre) : 

@@ -15,16 +15,18 @@ public class BriandaisTest {
 		ArrayList<String> list = Tools.getListOfString("exemple_base");
 		ArbreBriandais arbre = null;
 		
-		for (String mot : list) {
+		/* for (String mot : list) {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
 
-		MethodesArbreBriandais.afficher(arbre);
+		System.out.println("Mots de l'arbre : " + MethodesArbreBriandais.comptageMots(arbre));
 		
-		Set<String> set = new HashSet<String>();
+		MethodesArbreBriandais.afficher(arbre); */
+		
+		/*Set<String> set = new HashSet<String>();
 		set.addAll(list);
 
-		/*System.out.println("Taille : " + list.size() + ", ComptageMots: "
+		System.out.println("Taille : " + list.size() + ", ComptageMots: "
 				+ MethodesArbreBriandais.comptageMots(arbre) + ", Set: "
 				+ set.size());
 
@@ -36,7 +38,22 @@ public class BriandaisTest {
 		// List<String> mots = MethodesArbreBriandais.listeMots(arbre);
 		// System.out.println(mots + "\n" + mots.size());
 		
-		System.out.println("hauteur: " + MethodesArbreBriandais.hauteur(arbre));
+		// System.out.println("hauteur: " + MethodesArbreBriandais.hauteur(arbre));
+		
+		
+		arbre = MethodesArbreBriandais.insertion(arbre, "dac");
+		arbre = MethodesArbreBriandais.insertion(arbre, "a");
+		arbre = MethodesArbreBriandais.insertion(arbre, "da");
+		System.out.println("comptageNil : " + MethodesArbreBriandais.comptageNil(arbre));
+		MethodesArbreBriandais.afficher(arbre);
+		
+		// arbre = MethodesArbreBriandais.suppression(arbre, "da");
+		// arbre = MethodesArbreBriandais.suppression(arbre, "dac");
+		
+		System.out.println("###########");	
+		// System.out.println("da est prefixe de " + MethodesArbreBriandais.prefixe(arbre, "dac") + " mot(s)");
+		
+		System.out.println("Profondeur moyenne : " + MethodesArbreBriandais.profondeurMoyenne(arbre));
 		
 	}
 

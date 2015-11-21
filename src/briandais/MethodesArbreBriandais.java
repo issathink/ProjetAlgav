@@ -22,14 +22,14 @@ public class MethodesArbreBriandais {
 	 * deja). Retourne le nouvel arbre contenant 'mot'.
 	 */
 	public static ArbreBriandais insertion(ArbreBriandais arbre, String mot) {
-		if (recherche(arbre, mot)) {
-			System.out.println("Le mot : " + mot + " existe");
-			return arbre;
-		}
 
 		if (arbre == null) {
 			return construire(mot);
 		}
+
+		/* Si le mot existe deja dans l'arbre. */
+		if (mot.equals("") && arbre.getContent() == ArbreBriandais.EPSILON)
+			return arbre;
 
 		if (mot.equals("")) {
 			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(),
@@ -123,17 +123,17 @@ public class MethodesArbreBriandais {
 	 * nouvel arbre sans 'mot'.
 	 */
 	public static ArbreBriandais suppression(ArbreBriandais arbre, String mot) {
-		if(arbre == null)
+		if (arbre == null)
 			return null;
-		
+
 		if (mot.equals("") && arbre.getContent() == ArbreBriandais.EPSILON)
 			if (arbre.getSuivant() == null)
 				return null;
 			else
 				return arbre.getSuivant();
-		else if(mot.equals("")) // Le mot a supprimer n'existe pas
+		else if (mot.equals("")) // Le mot a supprimer n'existe pas
 			return arbre;
-		
+
 		ArbreBriandais abr;
 		char c = mot.charAt(0);
 		char content = arbre.getContent();
@@ -147,7 +147,6 @@ public class MethodesArbreBriandais {
 			arbre.setFils(abr);
 			return arbre;
 		}
-
 	}
 
 	/*
@@ -170,6 +169,29 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
+	 * Affiche l'arbre de manière formattée. (Comme la representation sur
+	 * papier)
+	 */
+	public static void affichageFormate(ArbreBriandais arbre) {
+		afficheFormateRec(arbre, 10);
+	}
+
+	private static void afficheFormateRec(ArbreBriandais arbre, int decalage) {
+		if (arbre == null) {
+			System.out.println("nil");
+			return;
+		}
+
+		System.out.print(arbre.getContent() + " ");
+		for (int i = 0; i < decalage; i++)
+			System.out.print("-");
+
+		System.out.print("> ");
+		afficheFormateRec(arbre.getFils(), decalage - 2);
+		afficheFormateRec(arbre.getSuivant(), decalage);
+	}
+
+	/*
 	 * Liste les mots du dictionnaire dans l'ordre alphabetique.
 	 */
 	public static List<String> listeMots(ArbreBriandais arbre) {
@@ -179,6 +201,9 @@ public class MethodesArbreBriandais {
 		return mots;
 	}
 
+	/*
+	 * Parcours l'arbre et rajoute les mots de l'arbre dans la liste.
+	 */
 	private static void ajoutDansListe(ArbreBriandais arbre, List<String> mots,
 			String pref, int niveau) {
 		if (arbre == null)
@@ -202,13 +227,13 @@ public class MethodesArbreBriandais {
 	public static int comptageNil(ArbreBriandais arbre) {
 		if (arbre == null)
 			return 1;
-		return comptageNil(arbre.getFils()) + comptageNil(arbre.getFils());
+		return comptageNil(arbre.getSuivant()) + comptageNil(arbre.getFils());
 	}
 
 	/*
-	 * La hauteur de l'arbre.
+	 * La hauteur du plus long mot de l'arbre.
 	 */
-	public static int hauteur(ArbreBriandais arbre) {
+	public static int plusLongMot(ArbreBriandais arbre) {
 		int h, hMax;
 
 		if (arbre == null)
@@ -217,15 +242,15 @@ public class MethodesArbreBriandais {
 		ArbreBriandais abr = arbre.getSuivant();
 
 		if (arbre.getContent() == ArbreBriandais.EPSILON)
-			hMax = hauteur(arbre.getFils());
+			hMax = plusLongMot(arbre.getFils());
 		else
-			hMax = 1 + hauteur(arbre.getFils());
+			hMax = 1 + plusLongMot(arbre.getFils());
 
 		while (abr != null) {
 			if (abr.getContent() == ArbreBriandais.EPSILON)
-				h = hauteur(abr.getFils());
+				h = plusLongMot(abr.getFils());
 			else
-				h = 1 + hauteur(abr.getFils());
+				h = 1 + plusLongMot(abr.getFils());
 			if (h > hMax)
 				hMax = h;
 			abr = abr.getSuivant();
@@ -235,50 +260,98 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Le nombre de mots du dictionnaire dont 'mot' est prefixe.
+	 * Hauteur de l'arbre.
 	 */
-	public static int prefixe(ArbreBriandais arbre, String mot) {
-		/*
-		 * if (arbre == null) return 0; if(mot.equals("")) return
-		 */
-		return -1;
+	public static int hauteur(ArbreBriandais arbre) {
+		if (arbre == null)
+			return 0;
+
+		return 1 + Integer.max(hauteur(arbre.getFils()),
+				hauteur(arbre.getSuivant()));
 	}
 
 	/*
 	 * Profondeur moyenne des feuilles de l'arbre.
 	 */
 	public static int profondeurMoyenne(ArbreBriandais arbre) {
-		String result, tab[];
-		int soe, nb;
+		int soe = 0;
+		List<Integer> list = new ArrayList<Integer>();
 
-		result = nbFeuilleSomme(arbre, 0, 0);
+		feuilleEtNiveau(arbre, list, 0);
 
-		tab = result.split(";");
-		soe = Integer.parseInt(tab[0]);
-		nb = Integer.parseInt(tab[1]);
-
-		if (nb > 0)
-			return soe / nb;
+		if (list.size() > 0) {
+			for (Integer prof : list)
+				soe += prof;
+			return soe / list.size();
+		}
 		return 0;
 	}
 
-	private static String nbFeuilleSomme(ArbreBriandais arbre, int somme, int nb) {
-
+	/*
+	 * On considere les feuilles comme etant les mot du dictionnaire donc se
+	 * terminant par EPSILON.
+	 */
+	private static void feuilleEtNiveau(ArbreBriandais arbre,
+			List<Integer> list, int niveau) {
 		if (arbre == null)
-			return "0;0";
+			return;
 
-		// if(arbre.getContent() == ArbreBriandais.EPSILON && arbre.getSuivant()
-		// == null)
-		// return (somme+1) + ";" + ()
-		return "0;0";
+		char content = arbre.getContent();
+
+		if (content == ArbreBriandais.EPSILON) {
+			System.out.println("content : " + content + ", niveau : " + niveau);
+			list.add(niveau);
+			feuilleEtNiveau(arbre.getSuivant(), list, niveau + 1);
+			return;
+		}
+
+		feuilleEtNiveau(arbre.getFils(), list, niveau + 1);
+		feuilleEtNiveau(arbre.getSuivant(), list, niveau + 1);
 	}
 
 	/*
-	 * Affiche l'arbre de manière formattée. (Comme la representation sur
-	 * papier)
+	 * Le nombre de mots du dictionnaire dont 'mot' est prefixe.
 	 */
-	public static void afficheFormate(ArbreBriandais arbre) {
+	public static int prefixe(ArbreBriandais arbre, String mot) {
 
+		ArbreBriandais abr = getSousArbreDuMot(arbre, mot);
+		int nbMots = nombreMots(abr);
+
+		return nbMots;
 	}
 
+	/*
+	 * Etant donne un arbre et un mot, retourne le sous pointe par mot ou null
+	 * si le mot n'existe pas.
+	 */
+	private static ArbreBriandais getSousArbreDuMot(ArbreBriandais arbre,
+			String mot) {
+		if (arbre == null)
+			return null;
+
+		if (mot.equals(""))
+			return arbre;
+
+		char c = mot.charAt(0);
+		char content = arbre.getContent();
+
+		if (c > content)
+			return getSousArbreDuMot(arbre.getSuivant(), mot);
+		else if (c < content)
+			return null;
+		else
+			return getSousArbreDuMot(arbre.getFils(), mot.substring(1));
+	}
+
+	/*
+	 * Compte le nombre de mot de l'arbre.
+	 */
+	private static int nombreMots(ArbreBriandais arbre) {
+		if (arbre == null)
+			return 0;
+
+		if (arbre.getContent() == ArbreBriandais.EPSILON)
+			return 1 + nombreMots(arbre.getSuivant());
+		return nombreMots(arbre.getFils()) + nombreMots(arbre.getSuivant());
+	}
 }

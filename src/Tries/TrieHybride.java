@@ -3,15 +3,24 @@ package Tries;
 
 public class TrieHybride {
 
-	private char val = '/';
+	private char val;
 	private boolean arret;
+	private int num_mot;
+	private int id;
 	private TrieHybride inf;
 	private TrieHybride eq;
 	private TrieHybride sup;
+	
+	private static int cpt_mot = 0;
+	private static int id_gene = 0;   //Permet de generer un id unique pour chaque noeud
 
 
 	public TrieHybride(){
+		this.id = id_gene;
+		id_gene++;
 		this.arret = false;
+		this.val = '/';
+		num_mot = -1;
 	}
 
 	public void setVal(char elem){
@@ -21,6 +30,14 @@ public class TrieHybride {
 	public char getVal(){
 		return val;
 	}
+	
+	public int getNumMot(){
+		return num_mot;
+	}
+	
+	public int getId(){
+		return id;
+	}
 
 	public boolean estArbreVide(){
 		if(val == '/'){
@@ -29,26 +46,34 @@ public class TrieHybride {
 		return false;
 	}
 	
-	public void setArret(){
-		arret = true;
+	public void setArret(boolean b){
+		arret = b;
+		if(b){
+			num_mot = cpt_mot;
+			cpt_mot++;
+		}
 	}
 	
-	public boolean getArret() {
+	public boolean getArret(){
 		return arret;
 	}
+	
 
 	public TrieHybride getInf(){
-		inf = new TrieHybride();
+		if(inf == null)
+			inf = new TrieHybride();
 		return inf;
 	}
 
 	public TrieHybride getEq(){
-		eq = new TrieHybride();
+		if(eq == null)
+			eq = new TrieHybride();
 		return eq;
 	}
 
 	public TrieHybride getSup(){
-		sup = new TrieHybride();
+		if(sup == null)
+			sup = new TrieHybride();
 		return sup;
 	}
 	

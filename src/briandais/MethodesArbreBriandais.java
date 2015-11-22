@@ -211,7 +211,7 @@ public class MethodesArbreBriandais {
 
 		pref += arbre.getContent();
 		if (arbre.getContent() == ArbreBriandais.EPSILON) {
-			System.out.println(pref);
+			// System.out.println(pref);
 			mots.add(pref.substring(0, pref.length() - 1));
 		}
 
@@ -299,7 +299,7 @@ public class MethodesArbreBriandais {
 		char content = arbre.getContent();
 
 		if (content == ArbreBriandais.EPSILON) {
-			System.out.println("content : " + content + ", niveau : " + niveau);
+			// System.out.println("content : " + content + ", niveau : " + niveau);
 			list.add(niveau);
 			feuilleEtNiveau(arbre.getSuivant(), list, niveau + 1);
 			return;
@@ -321,8 +321,8 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Etant donne un arbre et un mot, retourne le sous pointe par mot ou null
-	 * si le mot n'existe pas.
+	 * Etant donne un arbre et un mot, retourne le sous arbre pointe par mot ou
+	 * null si le mot n'existe pas.
 	 */
 	private static ArbreBriandais getSousArbreDuMot(ArbreBriandais arbre,
 			String mot) {
@@ -354,13 +354,57 @@ public class MethodesArbreBriandais {
 			return 1 + nombreMots(arbre.getSuivant());
 		return nombreMots(arbre.getFils()) + nombreMots(arbre.getSuivant());
 	}
-	
-	public static ArbreBriandais fusion(ArbreBriandais arbre1, ArbreBriandais arbre2) {
-		if(arbre1 == null)
+
+	/*
+	 * Fusionne deux arbres
+	 */
+	public static ArbreBriandais fusion(ArbreBriandais arbre1,
+			ArbreBriandais arbre2) {
+		if (arbre1 == null)
 			return arbre2;
-		if(arbre2 == null)
+		if (arbre2 == null)
 			return arbre1;
-		
-		return null;
+
+		int profMoy1 = profondeurMoyenne(arbre1);
+		int profMoy2 = profondeurMoyenne(arbre2);
+		char c1 = arbre1.getContent();
+		char c2 = arbre2.getContent();
+
+		if (profMoy1 > profMoy2) {
+			if (c1 == c2) {
+				arbre1.setFils(fusion(arbre1.getFils(), arbre2.getFils()));
+				arbre1.setSuivant(fusion(arbre1.getSuivant(),
+						arbre2.getSuivant()));
+				return arbre1;
+			} else if (c1 < c2) {
+				arbre1.setSuivant(fusion(arbre1.getSuivant(), arbre2));
+				return arbre1;
+			} else {
+				ArbreBriandais abr = new ArbreBriandais(arbre1.getSuivant(),
+						arbre1.getFils(), arbre1.getContent());
+				arbre1.setContent(c2);
+				arbre1.setFils(arbre2.getFils());
+				arbre1.setSuivant(fusion(arbre2.getSuivant(), abr));
+				return arbre1;
+			}
+		} else {
+			if (c2 == c1) {
+				arbre2.setFils(fusion(arbre1.getFils(), arbre2.getFils()));
+				arbre2.setSuivant(fusion(arbre1.getSuivant(),
+						arbre2.getSuivant()));
+				return arbre2;
+			} else if (c2 < c1) {
+				arbre2.setSuivant(fusion(arbre2.getSuivant(), arbre1));
+				return arbre2;
+			} else {
+				ArbreBriandais abr = new ArbreBriandais(arbre2.getSuivant(),
+						arbre2.getFils(), arbre2.getContent());
+				arbre2.setContent(c1);
+				arbre2.setFils(arbre1.getFils());
+				arbre2.setSuivant(fusion(arbre1.getSuivant(), abr));
+				return arbre2;
+			}
+		}
+
 	}
 }

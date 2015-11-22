@@ -354,4 +354,13 @@ public class MethodesArbreBriandais {
 			return 1 + nombreMots(arbre.getSuivant());
 		return nombreMots(arbre.getFils()) + nombreMots(arbre.getSuivant());
 	}
+	
+	public static ArbreBriandais fusion(ArbreBriandais arbre1, ArbreBriandais arbre2) {
+		if(arbre1 == null)
+			return arbre2;
+		if(arbre2 == null)
+			return arbre1;
+		
+		return null;
+	}
 }

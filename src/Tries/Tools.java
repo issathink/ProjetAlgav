@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Tools {
 
-	static String LireFichier(String file){	
+	public static String LireFichier(String file){	
 
 		File f = new File(file);
 		FileReader fr = null;
@@ -42,7 +42,7 @@ public class Tools {
 	}
 
 
-	static String[] tab_word(String texte){
+	public static String[] tab_word(String texte){
 		String s = "";
 		int i = 0;
 		int k = 0;

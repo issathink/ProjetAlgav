@@ -3,6 +3,9 @@ package briandais;
 import java.util.ArrayList;
 import java.util.List;
 
+import Tries.MethodesTrieHybride;
+import Tries.TrieHybride;
+
 public class MethodesArbreBriandais {
 
 	/*
@@ -81,7 +84,6 @@ public class MethodesArbreBriandais {
 			return arbre;
 		}
 
-		System.out.println("Ce message ne doit pas etre affiche.");
 		return null;
 	}
 
@@ -299,7 +301,8 @@ public class MethodesArbreBriandais {
 		char content = arbre.getContent();
 
 		if (content == ArbreBriandais.EPSILON) {
-			// System.out.println("content : " + content + ", niveau : " + niveau);
+			// System.out.println("content : " + content + ", niveau : " +
+			// niveau);
 			list.add(niveau);
 			feuilleEtNiveau(arbre.getSuivant(), list, niveau + 1);
 			return;
@@ -405,6 +408,22 @@ public class MethodesArbreBriandais {
 				return arbre2;
 			}
 		}
+	}
 
+	/*
+	 * Etant donne un arbre de Briandais, retoure le trie correspondant.
+	 */
+	public static TrieHybride briandaisVersHybride(ArbreBriandais arbre) {
+		List<String> list = MethodesArbreBriandais.listeMots(arbre);
+		TrieHybride trie = new TrieHybride();
+		int taille = list.size();
+
+		for (int i = 0; i < taille; i++) {
+			int mil = list.size() / 2;
+			trie = MethodesTrieHybride.ajoutMot(list.get(mil), trie);
+			list.remove(mil);
+		}
+
+		return trie;
 	}
 }

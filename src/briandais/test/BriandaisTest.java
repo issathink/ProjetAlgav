@@ -1,10 +1,11 @@
 package briandais.test;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import Tries.MethodesTrieHybride;
+import Tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 import briandais.Tools;
@@ -62,9 +63,19 @@ public class BriandaisTest {
 		arbre = MethodesArbreBriandais.fusion(arbre, arbre2);
 
 		// MethodesArbreBriandais.afficher(arbre);
-		
+
 		List<String> mots = MethodesArbreBriandais.listeMots(arbre);
 		System.out.println(mots + "\n" + mots.size());
+
+		TrieHybride trie = MethodesArbreBriandais.briandaisVersHybride(arbre);
+		// List<String> motsTrie = MethodesTrieHybride.listeMots(trie);
+		// System.out.println(motsTrie + "\n" + motsTrie.size());
+
+		List<String> c = Tools.getListOfString("exemple_base");
+		for (String mot : c) {
+			System.out.println("mot : " + mot + "  "
+					+ MethodesTrieHybride.recherche(trie, mot));
+		}
 
 		// arbre = MethodesArbreBriandais.suppression(arbre, "da");
 		// arbre = MethodesArbreBriandais.suppression(arbre, "dac");
@@ -76,6 +87,35 @@ public class BriandaisTest {
 		// System.out.println("Profondeur moyenne : " +
 		// MethodesArbreBriandais.profondeurMoyenne(arbre));
 
+	}
+
+	/*
+	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare.
+	 */
+	public static ArbreBriandais constuireOeuvreShakespeare() {
+		ArbreBriandais arbre = null;
+		File rep = new File("Shakespeare");
+		File[] files = rep.listFiles();
+		ConstruireArbreFichier[] tabThreads = new ConstruireArbreFichier[files.length];
+		int i = 0;
+
+		for (File file : files)
+			tabThreads[i++] = new ConstruireArbreFichier(file.getAbsolutePath());
+
+		/* On attends que les threads se terminent. */
+		try {
+			for (int j = 0; j < tabThreads.length; j++)
+				tabThreads[j].join();
+		} catch (InterruptedException e) {
+			System.out.println("Je devais pas etre interrompu.");
+			e.printStackTrace();
+		}
+
+		/* On fusionne tous les arbres. */
+		for (int j = 0; j < tabThreads.length; j++) 
+			arbre = MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());
+		
+		return arbre;
 	}
 
 }

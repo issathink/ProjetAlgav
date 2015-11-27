@@ -6,8 +6,6 @@ import java.util.List;
 
 import tools.ConstruireArbreFichier;
 import tools.Tools;
-import tries.MethodesTrieHybride;
-import tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 
@@ -69,7 +67,7 @@ public class BriandaisTest {
 		List<String> mots = MethodesArbreBriandais.listeMots(arbre);
 		System.out.println(mots + "\n" + mots.size());
 
-		TrieHybride trie = MethodesArbreBriandais.briandaisVersHybride(arbre);
+		// TrieHybride trie = MethodesArbreBriandais.briandaisVersHybride(arbre);
 		// List<String> motsTrie = MethodesTrieHybride.listeMots(trie);
 		// System.out.println(motsTrie + "\n" + motsTrie.size());
 

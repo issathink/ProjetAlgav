@@ -1,4 +1,4 @@
-package Tries;
+package tries;
 
 
 public class TrieHybride {
@@ -23,6 +23,16 @@ public class TrieHybride {
 		num_mot = -1;
 	}
 
+	public void setSelf(TrieHybride t){  //Recopie d'un arbre sur soit
+		id = t.getId();
+		val = t.getVal();
+		arret = t.getArret();
+		num_mot = t.getNumMot();
+		inf  = t.getInf();
+		sup = t.getSup();
+		eq = t.getEq();
+	}
+	
 	public void setVal(char elem){
 		val = elem;
 	}
@@ -34,6 +44,7 @@ public class TrieHybride {
 	public int getNumMot(){
 		return num_mot;
 	}
+	
 	
 	public int getId(){
 		return id;
@@ -48,16 +59,20 @@ public class TrieHybride {
 	
 	public void setArret(boolean b){
 		arret = b;
-		if(b){
-			num_mot = cpt_mot;
-			cpt_mot++;
-		}
 	}
 	
 	public boolean getArret(){
 		return arret;
 	}
 	
+	public void setNum(){
+		num_mot = cpt_mot;
+		cpt_mot++;
+	}
+	
+	public void setNum(int num){
+		num_mot = num;
+	}
 
 	public TrieHybride getInf(){
 		if(inf == null)

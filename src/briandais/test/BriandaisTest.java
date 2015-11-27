@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tries.MethodesTrieHybride;
-import Tries.TrieHybride;
+import tries.MethodesTrieHybride;
+import tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 import briandais.Tools;

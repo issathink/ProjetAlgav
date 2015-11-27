@@ -3,8 +3,8 @@ package briandais;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tries.MethodesTrieHybride;
-import Tries.TrieHybride;
+import tries.MethodesTrieHybride;
+import tries.TrieHybride;
 
 public class MethodesArbreBriandais {
 

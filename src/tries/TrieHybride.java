@@ -6,7 +6,7 @@ import tools.Tools;
 public class TrieHybride {
 
 	private char val;
-	private boolean arret;
+	private char arret;
 	private int num_mot;
 	private int id;
 	private TrieHybride inf;
@@ -20,8 +20,8 @@ public class TrieHybride {
 	public TrieHybride(){
 		this.id = id_gene;
 		id_gene++;
-		this.arret = false;
-		this.val = Tools.EPSILON;
+		this.arret = '\0';
+		this.val = Tools.FIN;
 		num_mot = -1;
 	}
 
@@ -53,17 +53,20 @@ public class TrieHybride {
 	}
 
 	public boolean estArbreVide(){
-		if(val == Tools.EPSILON){
+		if(val == Tools.FIN){
 			return true;
 		}
 		return false;
 	}
 	
 	public void setArret(boolean b){
-		arret = b;
+		if(b)
+			arret = Tools.EPSILON;
+		else
+			arret = '\0';
 	}
 	
-	public boolean getArret(){
+	public char getArret(){
 		return arret;
 	}
 	

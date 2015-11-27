@@ -1,15 +1,18 @@
 package test;
 
+import java.util.ArrayList;
+
 import tools.Tools;
 import tries.MethodesTrieHybride;
 import tries.TrieHybride;
+import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 
 public class TestTrieHybride {
 	
 	public static void main(String []args){
 		
-		TrieHybride t = MethodesTrieHybride.triEquilibre();
+		TrieHybride t = MethodesTrieHybride.construireTrie(); // MethodesTrieHybride.triEquilibre();
 		
 		/*ArrayList<String> tab_mots = Tools.getListOfString("exemple_base");
 		for(String mot : tab_mots){
@@ -33,11 +36,21 @@ public class TestTrieHybride {
 		//MethodesTrieHybride.suppression(t, "A");
 		
 		
-		
-		MethodesArbreBriandais.afficher(MethodesTrieHybride.trieVersBriandais(t));
+		ArbreBriandais abr = MethodesTrieHybride.trieVersBriandais(t);
+		ArrayList<String> list = Tools.getListOfString("exemple_base");
+		ArbreBriandais arbre = null;
+
+		for (String mot : list) {
+			arbre = MethodesArbreBriandais.insertion(arbre, mot);
+		}
+		MethodesArbreBriandais.afficher(abr);
+		System.out.println("Nb mots : " + MethodesArbreBriandais.comptageMots(abr));
 		
 		Tools.fileDot(t, "TrieHybride");
 		Tools.commandDot("TrieHybride");
+		
+		Tools.fileDotBriandais(abr, "Briandais");
+		Tools.commandDot("Briandais");
 		
 		//ArbreBriandais briandais = MethodesTrieHybride.trieVersBriandais(t);
 		

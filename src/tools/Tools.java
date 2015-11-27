@@ -9,11 +9,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import briandais.ArbreBriandais;
 import tries.TrieHybride;
 
 public class Tools {
 
 	public final static char EPSILON = '#';
+	public final static char FIN = '/';
 
 	static String LireFichier(String file) {
 
@@ -93,7 +95,6 @@ public class Tools {
 
 		FileWriter fw;
 		try {
-			System.out.println("Generation du fichier : " + file);
 			fw = new FileWriter(file, true);
 			BufferedWriter output = new BufferedWriter(fw);
 			output.write(texte);
@@ -122,7 +123,8 @@ public class Tools {
 		int id = t.getId();
 		char val = t.getVal();
 
-		String num = t.getArret() ? " xlabel=\"" + t.getNumMot() + "\"" : "";
+		String num = (t.getArret() == Tools.EPSILON) ? " xlabel=\""
+				+ t.getNumMot() + "\"" : "";
 		s += id + " [label=\"" + val + "\"" + num + "];\n";
 
 		if (!t.getInf().estArbreVide()) {
@@ -148,11 +150,69 @@ public class Tools {
 		return s;
 	}
 
+	public static String getGraphicBriandais(ArbreBriandais arbre) {
+		String s = "digraph G {\n";
+		s += "node [color=lightblue2, style=filled];\n";
+		s += generGraphBriandais(arbre);
+		s += "}\n";
+		return s;
+	}
+
+	public static String generGraphBriandais(ArbreBriandais arbre) {
+		if (arbre == null) {
+			return "";
+		}
+
+		String num = (arbre.getContent() == Tools.EPSILON) ? " xlabel=\"" + ""
+				+ "\"" : "";
+		int id = arbre.getId();
+		String s = "";
+		char val = arbre.getContent();
+
+		s += id + " [label=\"" + val + "\"" + num + "];\n";
+
+		if (arbre.getFils() != null) {
+			s += "edge [arrowsize=2, color=green];\n";
+			s += id + " -> " + arbre.getFils().getId() + ";\n";
+		}
+		if (arbre.getSuivant() != null) {
+			s += "edge [arrowsize=2, color=blue];\n";
+			s += id + " -> " + arbre.getSuivant().getId() + ";\n";
+		}
+
+		if (arbre.getFils() != null)
+			s += generGraphBriandais(arbre.getFils());
+		if (arbre.getSuivant() != null)
+			s += generGraphBriandais(arbre.getSuivant());
+
+		return s;
+	}
+
+	public static void fileDotBriandais(ArbreBriandais arbre, String filename) {
+		String texte = getGraphicBriandais(arbre);
+		String file = filename + ".dot";
+
+		File f = new File(file);
+		if (f.exists())
+			f.delete();
+
+		FileWriter fw;
+		try {
+			fw = new FileWriter(file, true);
+			BufferedWriter output = new BufferedWriter(fw);
+			output.write(texte);
+			output.flush();
+			output.close();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void commandDot(String filename) {
 		Runtime runtime = Runtime.getRuntime();
-
-		/* Suppresion du jpg si existant */
 		File file = new File(filename + ".jpg");
+
 		if (file.exists())
 			file.delete();
 
@@ -171,11 +231,11 @@ public class Tools {
 
 	public static TrieHybride copyOf(TrieHybride t) {
 		TrieHybride copy = new TrieHybride();
-		copy.setArret(t.getArret());
+		copy.setArret(t.getArret() == Tools.EPSILON);
 		copy.setEq(t.getEq());
 		copy.setInf(t.getInf());
 		copy.setSup(t.getSup());
-		if (t.getArret())
+		if (t.getArret() == Tools.EPSILON)
 			copy.setNum(t.getNumMot());
 		copy.setVal(t.getVal());
 		return copy;

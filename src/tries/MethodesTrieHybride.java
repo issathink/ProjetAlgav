@@ -2,6 +2,7 @@ package tries;
 
 import java.util.ArrayList;
 
+import tools.Tools;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 
@@ -366,12 +367,12 @@ public class MethodesTrieHybride {
 		while(!suppr.getArret()){
 			eq = suppr.getEq();
 			suppr.setArret(false);
-			suppr.setVal('/');
+			suppr.setVal(Tools.EPSILON);
 			suppr = null;
 			suppr = eq;
 		}
 		suppr.setArret(false);
-		suppr.setVal('/');
+		suppr.setVal(Tools.EPSILON);
 		suppr = null;
 
 		
@@ -404,12 +405,17 @@ public class MethodesTrieHybride {
 
 	/******Fonction de conversion d'un TrieHybride vers un Arbdre de la Briandais*****/
 	public static ArbreBriandais trieVersBriandais(TrieHybride t){
+		
+		System.out.println("val : " + t.getVal());
 
 		if(t.estArbreVide())
-			return null;	
-
-		if(t.getInf().estArbreVide() && t.getEq().estArbreVide() && t.getSup().estArbreVide())
+			return null;
+		
+		if(t.getArret())
 			return new ArbreBriandais(t.getVal());
+
+		/*if(t.getInf().estArbreVide() && t.getEq().estArbreVide() && t.getSup().estArbreVide())
+			return new ArbreBriandais(t.getVal());*/
 
 		ArbreBriandais briandais = null;
 

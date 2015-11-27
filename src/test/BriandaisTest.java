@@ -1,14 +1,15 @@
-package briandais.test;
+package test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.ConstruireArbreFichier;
+import tools.Tools;
 import tries.MethodesTrieHybride;
 import tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
-import briandais.Tools;
 
 public class BriandaisTest {
 
@@ -17,15 +18,14 @@ public class BriandaisTest {
 		ArrayList<String> list = Tools.getListOfString("exemple_base");
 		ArbreBriandais arbre = null;
 
-		/*
-		 * for (String mot : list) { arbre =
-		 * MethodesArbreBriandais.insertion(arbre, mot); }
-		 * 
-		 * System.out.println("Mots de l'arbre : " +
-		 * MethodesArbreBriandais.comptageMots(arbre));
-		 * 
-		 * MethodesArbreBriandais.afficher(arbre);
-		 */
+		for (String mot : list) {
+			arbre = MethodesArbreBriandais.insertion(arbre, mot);
+		}
+
+		System.out.println("Mots de l'arbre : "
+				+ MethodesArbreBriandais.comptageMots(arbre));
+
+		MethodesArbreBriandais.afficher(arbre);
 
 		/*
 		 * Set<String> set = new HashSet<String>(); set.addAll(list);
@@ -45,17 +45,19 @@ public class BriandaisTest {
 
 		// arbre = MethodesArbreBriandais.insertion(arbre, "dac");
 		// arbre = MethodesArbreBriandais.insertion(arbre, "a");
-		/*int i = 0;
-
-		for (i = 0; i < list.size() - 33; i++) {
-			arbre = MethodesArbreBriandais.insertion(arbre, list.get(i));
-		}
-
-		ArbreBriandais arbre2 = null;*/
+		/*
+		 * int i = 0;
+		 * 
+		 * for (i = 0; i < list.size() - 33; i++) { arbre =
+		 * MethodesArbreBriandais.insertion(arbre, list.get(i)); }
+		 * 
+		 * ArbreBriandais arbre2 = null;
+		 */
 		// arbre2 = MethodesArbreBriandais.insertion(arbre2, "da");
-		/*for (int j = i; j < list.size(); j++) {
-			arbre2 = MethodesArbreBriandais.insertion(arbre2, list.get(j));
-		}*/
+		/*
+		 * for (int j = i; j < list.size(); j++) { arbre2 =
+		 * MethodesArbreBriandais.insertion(arbre2, list.get(j)); }
+		 */
 
 		// System.out.println("comptageNil : " +
 		// MethodesArbreBriandais.comptageNil(arbre));
@@ -71,11 +73,11 @@ public class BriandaisTest {
 		// List<String> motsTrie = MethodesTrieHybride.listeMots(trie);
 		// System.out.println(motsTrie + "\n" + motsTrie.size());
 
-		List<String> c = Tools.getListOfString("exemple_base");
-		for (String mot : c) {
-			System.out.println("mot : " + mot + "  "
-					+ MethodesTrieHybride.recherche(trie, mot));
-		}
+		/*
+		 * List<String> c = Tools.getListOfString("exemple_base"); for (String
+		 * mot : c) { System.out.println("mot : " + mot + "  " +
+		 * MethodesTrieHybride.recherche(trie, mot)); }
+		 */
 
 		// arbre = MethodesArbreBriandais.suppression(arbre, "da");
 		// arbre = MethodesArbreBriandais.suppression(arbre, "dac");
@@ -86,8 +88,8 @@ public class BriandaisTest {
 
 		// System.out.println("Profondeur moyenne : " +
 		// MethodesArbreBriandais.profondeurMoyenne(arbre));
-		
-		constuireOeuvreShakespeare();
+
+		// constuireOeuvreShakespeare();
 
 	}
 
@@ -115,10 +117,12 @@ public class BriandaisTest {
 			System.out.println("Je devais pas etre interrompu.");
 			e.printStackTrace();
 		}
-		
+
 		/* On fusionne tous les arbres. */
-		/*for (int j = 0; j < tabThreads.length; j++) 
-			arbre = MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());*/
+		/*
+		 * for (int j = 0; j < tabThreads.length; j++) arbre =
+		 * MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());
+		 */
 
 		System.out.println("END of construction.");
 

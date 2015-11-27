@@ -1,31 +1,29 @@
-package briandais;
+package tools;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class Tools {
-	
-	public static void main(String []args) {
-		System.out.println(getListOfString("exemple_base"));
+import briandais.ArbreBriandais;
+import briandais.MethodesArbreBriandais;
+
+public class ConstruireArbreFichier extends Thread {
+
+	private ArbreBriandais arbre;
+	private String filename;
+
+	public ConstruireArbreFichier(String filename) {
+		this.filename = filename;
+		this.arbre = null;
+		start();
 	}
-	
-	
-	/*
-	 * Cette fonction prend le nom d'un fichier en parametres et retourne une
-	 * liste de chaines de caracteres (supprime tous les blancs et les retour
-	 * chariots).
-	 * 
-	 * @param filename - le nom du fichier à parser
-	 * 
-	 * @return list - la liste contenant
-	 */
-	public static ArrayList<String> getListOfString(String filename) {
-		ArrayList<String> list = new ArrayList<String>();
 
+	@Override
+	public void run() {
+
+		System.out.println("Creating Briandais from file: " + filename);
 		File file = new File(filename);
 		BufferedReader reader = null;
 
@@ -35,7 +33,7 @@ public class Tools {
 
 			while ((text = reader.readLine()) != null) {
 				text = text.trim();
-				list.add(text);
+				arbre = MethodesArbreBriandais.insertion(arbre, text);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Verifiez que le fichier : '" + filename
@@ -51,7 +49,10 @@ public class Tools {
 			}
 		}
 
-		return list;
+		System.out.println(Thread.currentThread() + "_END.");
 	}
 
+	public ArbreBriandais getArbre() {
+		return arbre;
+	}
 }

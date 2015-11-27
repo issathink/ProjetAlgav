@@ -1,5 +1,8 @@
-package tries;
+package test;
 
+import tools.Tools;
+import tries.MethodesTrieHybride;
+import tries.TrieHybride;
 import briandais.MethodesArbreBriandais;
 
 public class TestTrieHybride {

@@ -9,7 +9,6 @@ public class ArbreBriandais {
 	private ArbreBriandais suivant;
 	private ArbreBriandais fils;
 	private char content;
-	public final static char EPSILON = '#';
 	
 	public ArbreBriandais() {
 		this.suivant = null;

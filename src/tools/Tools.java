@@ -1,4 +1,4 @@
-package tries;
+package tools;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,41 +9,48 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import tries.TrieHybride;
+
 public class Tools {
 
-	static String LireFichier(String file){	
+	public final static char EPSILON = '#';
+
+	static String LireFichier(String file) {
 
 		File f = new File(file);
 		FileReader fr = null;
-		try
-		{
+		try {
 			fr = new FileReader(f);
-		}
-		catch(FileNotFoundException exception)
-		{
+		} catch (FileNotFoundException exception) {
 			System.out.println("Le fichier n'a pas ete trouve");
 		}
 
 		int t = (int) f.length();
-		String texte="";
-		try
-		{
-			while(t>0){
-				char c = (char)fr.read();
+		String texte = "";
+		try {
+			while (t > 0) {
+				char c = (char) fr.read();
 				texte += String.valueOf(c);
 				t--;
 			}
 			fr.close();
-		}
-		catch(IOException exception)
-		{
-			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
+		} catch (IOException exception) {
+			System.out.println("Erreur lors de la lecture : "
+					+ exception.getMessage());
 		}
 		return texte;
 
 	}
 
-
+	/*
+	 * Cette fonction prend le nom d'un fichier en parametres et retourne une
+	 * liste de chaines de caracteres (supprime tous les blancs et les retour
+	 * chariots).
+	 * 
+	 * @param filename - le nom du fichier à parser
+	 * 
+	 * @return list - la liste contenant
+	 */
 	public static ArrayList<String> getListOfString(String filename) {
 		ArrayList<String> list = new ArrayList<String>();
 
@@ -75,9 +82,7 @@ public class Tools {
 		return list;
 	}
 
-
-
-	/*******Generer fichier .odt pour l'affichage******/
+	/******* Generer fichier .odt pour l'affichage ******/
 	public static void fileDot(TrieHybride th, String filename) {
 		String texte = getGraphic(th);
 		String file = filename + ".dot";
@@ -88,7 +93,7 @@ public class Tools {
 
 		FileWriter fw;
 		try {
-			System.out.println("Generation du fichier : "+ file);
+			System.out.println("Generation du fichier : " + file);
 			fw = new FileWriter(file, true);
 			BufferedWriter output = new BufferedWriter(fw);
 			output.write(texte);
@@ -100,7 +105,6 @@ public class Tools {
 		}
 	}
 
-
 	public static String getGraphic(TrieHybride th) {
 		String s = "digraph G {\n";
 		s += "node [color=lightblue2, style=filled];\n";
@@ -108,8 +112,6 @@ public class Tools {
 		s += "}\n";
 		return s;
 	}
-
-
 
 	public static String generGraph(TrieHybride t) {
 		if (t == null) {
@@ -146,19 +148,17 @@ public class Tools {
 		return s;
 	}
 
-
-
 	public static void commandDot(String filename) {
 		Runtime runtime = Runtime.getRuntime();
 
 		/* Suppresion du jpg si existant */
-		File file = new File( filename + ".jpg");
+		File file = new File(filename + ".jpg");
 		if (file.exists())
 			file.delete();
 
 		try {
-			Process p = runtime
-					.exec(new String[] { "dot", "-Tjpg", "-o" + filename + ".jpg", filename + ".dot" });
+			Process p = runtime.exec(new String[] { "dot", "-Tjpg",
+					"-o" + filename + ".jpg", filename + ".dot" });
 			try {
 				p.waitFor();
 			} catch (InterruptedException e) {
@@ -169,18 +169,16 @@ public class Tools {
 		}
 	}
 
-	
-	public static TrieHybride copyOf(TrieHybride t){
+	public static TrieHybride copyOf(TrieHybride t) {
 		TrieHybride copy = new TrieHybride();
 		copy.setArret(t.getArret());
 		copy.setEq(t.getEq());
 		copy.setInf(t.getInf());
 		copy.setSup(t.getSup());
-		if(t.getArret())
+		if (t.getArret())
 			copy.setNum(t.getNumMot());
 		copy.setVal(t.getVal());
 		return copy;
 	}
-	
 
 }

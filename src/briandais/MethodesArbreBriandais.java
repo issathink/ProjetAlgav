@@ -3,6 +3,7 @@ package briandais;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.Tools;
 import tries.MethodesTrieHybride;
 import tries.TrieHybride;
 
@@ -15,7 +16,7 @@ public class MethodesArbreBriandais {
 	public static ArbreBriandais construire(String mot) {
 		// System.out.println("Construire : " + mot);
 		if (mot.equals(""))
-			return new ArbreBriandais(ArbreBriandais.EPSILON);
+			return new ArbreBriandais(Tools.EPSILON);
 		return new ArbreBriandais(null, MethodesArbreBriandais.construire(mot
 				.substring(1)), mot.charAt(0));
 	}
@@ -31,13 +32,13 @@ public class MethodesArbreBriandais {
 		}
 
 		/* Si le mot existe deja dans l'arbre. */
-		if (mot.equals("") && arbre.getContent() == ArbreBriandais.EPSILON)
+		if (mot.equals("") && arbre.getContent() == Tools.EPSILON)
 			return arbre;
 
 		if (mot.equals("")) {
 			ArbreBriandais e = new ArbreBriandais(arbre.getSuivant(),
 					arbre.getFils(), arbre.getContent());
-			arbre.setContent(ArbreBriandais.EPSILON);
+			arbre.setContent(Tools.EPSILON);
 			arbre.setFils(null);
 			arbre.setSuivant(e);
 			return arbre;
@@ -94,7 +95,7 @@ public class MethodesArbreBriandais {
 		if (arbre == null)
 			return 0;
 
-		if (arbre.getContent() == ArbreBriandais.EPSILON)
+		if (arbre.getContent() == Tools.EPSILON)
 			return 1 + comptageMots(arbre.getFils())
 					+ comptageMots(arbre.getSuivant());
 
@@ -109,7 +110,7 @@ public class MethodesArbreBriandais {
 			return false;
 
 		if (mot.equals("")) {
-			if (arbre.getContent() == ArbreBriandais.EPSILON)
+			if (arbre.getContent() == Tools.EPSILON)
 				return true;
 			return false; // recherche(arbre.getSuivant(), mot);
 		}
@@ -128,7 +129,7 @@ public class MethodesArbreBriandais {
 		if (arbre == null)
 			return null;
 
-		if (mot.equals("") && arbre.getContent() == ArbreBriandais.EPSILON)
+		if (mot.equals("") && arbre.getContent() == Tools.EPSILON)
 			if (arbre.getSuivant() == null)
 				return null;
 			else
@@ -163,7 +164,7 @@ public class MethodesArbreBriandais {
 			return;
 
 		pref += arbre.getContent();
-		if (arbre.getContent() == ArbreBriandais.EPSILON)
+		if (arbre.getContent() == Tools.EPSILON)
 			System.out.println(pref.substring(0, pref.length() - 1));
 
 		afficheRec(arbre.getFils(), pref.substring(0, niveau + 1), niveau + 1);
@@ -212,7 +213,7 @@ public class MethodesArbreBriandais {
 			return;
 
 		pref += arbre.getContent();
-		if (arbre.getContent() == ArbreBriandais.EPSILON) {
+		if (arbre.getContent() == Tools.EPSILON) {
 			// System.out.println(pref);
 			mots.add(pref.substring(0, pref.length() - 1));
 		}
@@ -243,13 +244,13 @@ public class MethodesArbreBriandais {
 
 		ArbreBriandais abr = arbre.getSuivant();
 
-		if (arbre.getContent() == ArbreBriandais.EPSILON)
+		if (arbre.getContent() == Tools.EPSILON)
 			hMax = plusLongMot(arbre.getFils());
 		else
 			hMax = 1 + plusLongMot(arbre.getFils());
 
 		while (abr != null) {
-			if (abr.getContent() == ArbreBriandais.EPSILON)
+			if (abr.getContent() == Tools.EPSILON)
 				h = plusLongMot(abr.getFils());
 			else
 				h = 1 + plusLongMot(abr.getFils());
@@ -300,7 +301,7 @@ public class MethodesArbreBriandais {
 
 		char content = arbre.getContent();
 
-		if (content == ArbreBriandais.EPSILON) {
+		if (content == Tools.EPSILON) {
 			// System.out.println("content : " + content + ", niveau : " +
 			// niveau);
 			list.add(niveau);
@@ -353,7 +354,7 @@ public class MethodesArbreBriandais {
 		if (arbre == null)
 			return 0;
 
-		if (arbre.getContent() == ArbreBriandais.EPSILON)
+		if (arbre.getContent() == Tools.EPSILON)
 			return 1 + nombreMots(arbre.getSuivant());
 		return nombreMots(arbre.getFils()) + nombreMots(arbre.getSuivant());
 	}

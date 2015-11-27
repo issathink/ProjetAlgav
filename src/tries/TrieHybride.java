@@ -1,5 +1,7 @@
 package tries;
 
+import tools.Tools;
+
 
 public class TrieHybride {
 
@@ -19,7 +21,7 @@ public class TrieHybride {
 		this.id = id_gene;
 		id_gene++;
 		this.arret = false;
-		this.val = '/';
+		this.val = Tools.EPSILON;
 		num_mot = -1;
 	}
 
@@ -51,7 +53,7 @@ public class TrieHybride {
 	}
 
 	public boolean estArbreVide(){
-		if(val == '/'){
+		if(val == Tools.EPSILON){
 			return true;
 		}
 		return false;

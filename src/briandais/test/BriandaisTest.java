@@ -45,22 +45,22 @@ public class BriandaisTest {
 
 		// arbre = MethodesArbreBriandais.insertion(arbre, "dac");
 		// arbre = MethodesArbreBriandais.insertion(arbre, "a");
-		int i = 0;
+		/*int i = 0;
 
 		for (i = 0; i < list.size() - 33; i++) {
 			arbre = MethodesArbreBriandais.insertion(arbre, list.get(i));
 		}
 
-		ArbreBriandais arbre2 = null;
+		ArbreBriandais arbre2 = null;*/
 		// arbre2 = MethodesArbreBriandais.insertion(arbre2, "da");
-		for (int j = i; j < list.size(); j++) {
+		/*for (int j = i; j < list.size(); j++) {
 			arbre2 = MethodesArbreBriandais.insertion(arbre2, list.get(j));
-		}
+		}*/
 
 		// System.out.println("comptageNil : " +
 		// MethodesArbreBriandais.comptageNil(arbre));
 
-		arbre = MethodesArbreBriandais.fusion(arbre, arbre2);
+		// arbre = MethodesArbreBriandais.fusion(arbre, arbre2);
 
 		// MethodesArbreBriandais.afficher(arbre);
 
@@ -86,6 +86,8 @@ public class BriandaisTest {
 
 		// System.out.println("Profondeur moyenne : " +
 		// MethodesArbreBriandais.profondeurMoyenne(arbre));
+		
+		constuireOeuvreShakespeare();
 
 	}
 
@@ -95,13 +97,16 @@ public class BriandaisTest {
 	public static ArbreBriandais constuireOeuvreShakespeare() {
 		ArbreBriandais arbre = null;
 		File rep = new File("Shakespeare");
+		System.out.println("Nb de fichiers : " + rep);
 		File[] files = rep.listFiles();
+		System.out.println("Nb de fichiers : " + files.length);
 		ConstruireArbreFichier[] tabThreads = new ConstruireArbreFichier[files.length];
 		int i = 0;
 
-		for (File file : files)
+		for (File file : files) {
 			tabThreads[i++] = new ConstruireArbreFichier(file.getAbsolutePath());
-
+			System.out.println("Fichier : " + file);
+		}
 		/* On attends que les threads se terminent. */
 		try {
 			for (int j = 0; j < tabThreads.length; j++)
@@ -110,11 +115,13 @@ public class BriandaisTest {
 			System.out.println("Je devais pas etre interrompu.");
 			e.printStackTrace();
 		}
-
-		/* On fusionne tous les arbres. */
-		for (int j = 0; j < tabThreads.length; j++) 
-			arbre = MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());
 		
+		/* On fusionne tous les arbres. */
+		/*for (int j = 0; j < tabThreads.length; j++) 
+			arbre = MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());*/
+
+		System.out.println("END of construction.");
+
 		return arbre;
 	}
 

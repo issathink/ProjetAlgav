@@ -49,6 +49,7 @@ public class ConstruireArbreFichier extends Thread {
 			}
 		}
 
+		System.out.println(Thread.currentThread() + "_END.");
 	}
 
 	public ArbreBriandais getArbre() {

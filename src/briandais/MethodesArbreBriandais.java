@@ -14,7 +14,6 @@ public class MethodesArbreBriandais {
 	 * nouvel arbre.
 	 */
 	public static ArbreBriandais construire(String mot) {
-		// System.out.println("Construire : " + mot);
 		if (mot.equals(""))
 			return new ArbreBriandais(Tools.EPSILON);
 		return new ArbreBriandais(null, MethodesArbreBriandais.construire(mot
@@ -253,7 +252,6 @@ public class MethodesArbreBriandais {
 
 		pref += arbre.getContent();
 		if (arbre.getContent() == Tools.EPSILON) {
-			// System.out.println(pref);
 			mots.add(pref.substring(0, pref.length() - 1));
 		}
 
@@ -341,8 +339,6 @@ public class MethodesArbreBriandais {
 		char content = arbre.getContent();
 
 		if (content == Tools.EPSILON) {
-			// System.out.println("content : " + content + ", niveau : " +
-			// niveau);
 			list.add(niveau);
 			feuilleEtNiveau(arbre.getSuivant(), list, niveau + 1);
 			return;
@@ -399,7 +395,7 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Fusionne deux arbres
+	 * Fusionne deux arbres de Briandais.
 	 */
 	public static ArbreBriandais fusion(ArbreBriandais arbre1,
 			ArbreBriandais arbre2) {
@@ -451,9 +447,10 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Etant donne un arbre de Briandais, retoure le trie correspondant.
+	 * Etant donne un arbre de Briandais, retoure le trie correspondant. Ce trie
+	 * est un peu plus equilibre que celui d'une transformation simple.
 	 */
-	public static TrieHybride briandaisVersHybride(ArbreBriandais arbre) {
+	public static TrieHybride briandaisVersHybrideOld(ArbreBriandais arbre) {
 		List<String> list = MethodesArbreBriandais.listeMots(arbre);
 		TrieHybride trie = new TrieHybride();
 		int taille = list.size();

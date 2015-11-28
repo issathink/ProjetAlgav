@@ -6,6 +6,8 @@ import java.util.List;
 
 import tools.ConstruireArbreFichier;
 import tools.Tools;
+import tries.MethodesTrieHybride;
+import tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 
@@ -20,8 +22,8 @@ public class BriandaisTest {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
 
-		System.out.println("Mots de l'arbre : "
-				+ MethodesArbreBriandais.comptageMots(arbre));
+		/*System.out.println("Mots de l'arbre : "
+				+ MethodesArbreBriandais.comptageMots(arbre));*/
 
 		// MethodesArbreBriandais.afficher(arbre);
 
@@ -99,11 +101,15 @@ public class BriandaisTest {
 		// MethodesArbreBriandais.affichageFormate(arbre);
 		// MethodesArbreBriandais.afficher(arbre);
 		
-		for(int i=0; i<10; i++)
+		/*for(int i=0; i<10; i++)
 			arbre = MethodesArbreBriandais.suppression(arbre, list.get(i));
 		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
 		MethodesArbreBriandais.afficher(arbre);
-		System.out.println(list);
+		System.out.println(list);*/
+		
+		TrieHybride trie = MethodesArbreBriandais.briandaisVersTrie(arbre);
+		System.out.println(MethodesTrieHybride.listeMots(trie));
+		System.out.println(MethodesTrieHybride.comptageMots(trie));
 	}
 
 	/*

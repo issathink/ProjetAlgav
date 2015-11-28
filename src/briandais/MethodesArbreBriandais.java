@@ -466,4 +466,43 @@ public class MethodesArbreBriandais {
 
 		return trie;
 	}
+
+	/*
+	 * Etant donne un arbre de Briandais, retoure le trie correspondant.
+	 */
+	public static TrieHybride briandaisVersTrie(ArbreBriandais arbre) {
+
+		TrieHybride trie = new TrieHybride();
+		TrieHybride tSup = new TrieHybride();
+		TrieHybride tInf = new TrieHybride();
+		TrieHybride tEq = new TrieHybride();
+
+		if (arbre == null) {
+			tEq.setVal(Tools.FIN);
+			tSup.setVal(Tools.FIN);
+			tInf.setVal(Tools.FIN);
+			trie.setVal(Tools.FIN);
+			trie.setEq(tEq);
+			trie.setInf(tInf);
+			trie.setSup(tSup);
+			return trie;
+		}
+
+		ArbreBriandais fils = arbre.getFils();
+		tInf.setVal(Tools.FIN);
+		trie.setVal(arbre.getContent());
+		trie.setInf(tInf);
+
+		if (fils != null && fils.getContent() == Tools.EPSILON) {
+			trie.setNum();
+			trie.setArret(true);
+			trie.setEq(briandaisVersTrie(fils.getSuivant()));
+		} else {
+			trie.setEq(briandaisVersTrie(fils));
+		}
+
+		trie.setSup(briandaisVersTrie(arbre.getSuivant()));
+
+		return trie;
+	}
 }

@@ -112,7 +112,7 @@ public class MethodesArbreBriandais {
 		if (mot.equals("")) {
 			if (arbre.getContent() == Tools.EPSILON)
 				return true;
-			return false; // recherche(arbre.getSuivant(), mot);
+			return false;
 		}
 
 		if (arbre.getContent() == mot.charAt(0))
@@ -122,10 +122,11 @@ public class MethodesArbreBriandais {
 	}
 
 	/*
-	 * Suprrime 'mot' de l'arbre s'il existe (l'ignore sinon). Retourne le
-	 * nouvel arbre sans 'mot'.
+	 * Supprime le caractere de fin de mot si le mot se termine par EPSILON
+	 * l'ignore sinon.
 	 */
-	public static ArbreBriandais suppression(ArbreBriandais arbre, String mot) {
+	private static ArbreBriandais suppressionEpsilon(ArbreBriandais arbre,
+			String mot) {
 		if (arbre == null)
 			return null;
 
@@ -142,12 +143,50 @@ public class MethodesArbreBriandais {
 		char content = arbre.getContent();
 
 		if (content < c) {
-			abr = suppression(arbre.getSuivant(), mot);
+			abr = suppressionEpsilon(arbre.getSuivant(), mot);
 			arbre.setSuivant(abr);
 			return arbre;
 		} else {
-			abr = suppression(arbre.getFils(), mot.substring(1));
+			abr = suppressionEpsilon(arbre.getFils(), mot.substring(1));
 			arbre.setFils(abr);
+			return arbre;
+		}
+	}
+
+	/*
+	 * Suprrime 'mot' de l'arbre s'il existe (l'ignore sinon). Retourne le
+	 * nouvel arbre sans 'mot'.
+	 */
+	public static ArbreBriandais suppression(ArbreBriandais arbre, String mot) {
+		int pref = prefixe(arbre, mot);
+		if (pref == 0) { // Le mot a supprimer n'existe pas
+			return arbre;
+		}
+		if (pref > 1) { // Le mot est prefixe d'autres mots.
+			return suppressionEpsilon(arbre, mot);
+		}
+
+		ArbreBriandais abr = arbre;
+		int prefChar = prefixe(arbre, mot.charAt(0) + "");
+
+		// Le mot n'est pas prefixe d'autres mots on peut supprimer la branche
+		if (prefChar == 1) {
+			ArbreBriandais tmp = abr;
+			if (arbre.getContent() == mot.charAt(0)) {
+				return arbre.getSuivant();
+			}
+
+			while (abr.getContent() != mot.charAt(0)) {
+				tmp = abr;
+				abr = abr.getSuivant();
+			}
+			tmp.setSuivant(abr.getSuivant());
+			return arbre;
+		} else {
+			while (abr.getContent() != mot.charAt(0))
+				abr = abr.getSuivant();
+
+			abr.setFils(suppression(abr.getFils(), mot.substring(1)));
 			return arbre;
 		}
 	}

@@ -11,7 +11,7 @@ import tries.TrieHybride;
 import briandais.ArbreBriandais;
 import briandais.MethodesArbreBriandais;
 
-public class BriandaisTest {
+public class TestBriandais {
 
 	public static void main(String[] args) {
 
@@ -22,8 +22,10 @@ public class BriandaisTest {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
 
-		/*System.out.println("Mots de l'arbre : "
-				+ MethodesArbreBriandais.comptageMots(arbre));*/
+		/*
+		 * System.out.println("Mots de l'arbre : " +
+		 * MethodesArbreBriandais.comptageMots(arbre));
+		 */
 
 		// MethodesArbreBriandais.afficher(arbre);
 
@@ -69,7 +71,8 @@ public class BriandaisTest {
 		// List<String> mots = MethodesArbreBriandais.listeMots(arbre);
 		// System.out.println(mots + "\n" + mots.size());
 
-		// TrieHybride trie = MethodesArbreBriandais.briandaisVersHybride(arbre);
+		// TrieHybride trie =
+		// MethodesArbreBriandais.briandaisVersHybride(arbre);
 		// List<String> motsTrie = MethodesTrieHybride.listeMots(trie);
 		// System.out.println(motsTrie + "\n" + motsTrie.size());
 
@@ -90,26 +93,31 @@ public class BriandaisTest {
 		// MethodesArbreBriandais.profondeurMoyenne(arbre));
 
 		// constuireOeuvreShakespeare();
-		
-		/*arbre = MethodesArbreBriandais.insertion(arbre, "dac");
-		arbre = MethodesArbreBriandais.insertion(arbre, "da");
-		arbre = MethodesArbreBriandais.insertion(arbre, "allo");
-		arbre = MethodesArbreBriandais.insertion(arbre, "el");*/
-		
+
+		/*
+		 * arbre = MethodesArbreBriandais.insertion(arbre, "dac"); arbre =
+		 * MethodesArbreBriandais.insertion(arbre, "da"); arbre =
+		 * MethodesArbreBriandais.insertion(arbre, "allo"); arbre =
+		 * MethodesArbreBriandais.insertion(arbre, "el");
+		 */
+
 		// MethodesArbreBriandais.affichageFormate(arbre);
-		//arbre = MethodesArbreBriandais.suppression(arbre, "da");
+		// arbre = MethodesArbreBriandais.suppression(arbre, "da");
 		// MethodesArbreBriandais.affichageFormate(arbre);
 		// MethodesArbreBriandais.afficher(arbre);
-		
-		/*for(int i=0; i<10; i++)
-			arbre = MethodesArbreBriandais.suppression(arbre, list.get(i));
-		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
-		MethodesArbreBriandais.afficher(arbre);
-		System.out.println(list);*/
-		
-		TrieHybride trie = MethodesArbreBriandais.briandaisVersTrie(arbre);
+
+		/*
+		 * for(int i=0; i<10; i++) arbre =
+		 * MethodesArbreBriandais.suppression(arbre, list.get(i));
+		 * System.out.println(MethodesArbreBriandais.comptageMots(arbre));
+		 * MethodesArbreBriandais.afficher(arbre); System.out.println(list);
+		 */
+
+		/*TrieHybride trie = MethodesArbreBriandais.briandaisVersTrie(arbre);
 		System.out.println(MethodesTrieHybride.listeMots(trie));
-		System.out.println(MethodesTrieHybride.comptageMots(trie));
+		System.out.println(MethodesTrieHybride.comptageMots(trie));*/
+		ArbreBriandais dict = constuireOeuvreShakespeare();
+		System.out.println(MethodesArbreBriandais.comptageMots(dict));
 	}
 
 	/*
@@ -138,10 +146,10 @@ public class BriandaisTest {
 		}
 
 		/* On fusionne tous les arbres. */
-		/*
-		 * for (int j = 0; j < tabThreads.length; j++) arbre =
-		 * MethodesArbreBriandais.fusion(arbre, tabThreads[j].getArbre());
-		 */
+
+		for (int j = 0; j < tabThreads.length; j++)
+			arbre = MethodesArbreBriandais.fusion(arbre,
+					tabThreads[j].getArbre());
 
 		System.out.println("END of construction.");
 

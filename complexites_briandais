@@ -1,10 +1,14 @@
-1- Recherche(arbre, mot) : O(hauteur de l'arbre), mesure: nombre de comparaison de caracters.
-2- ComptageMots(arbre) : 
-3- ListeMors(arbre) :
-4- ComptageNil(Arbre) : 
-5- Hauteur(arbre) : 
-6- ProfondeurMoyenne(arbre) :
-7- Prefixe(arbre, mot) : 
-8- Suppression(arbre, mot) : 
-9- Fusion(arbre1, arbre2) :
-10- BriandaisVersHybride(arbre) : 
+On considere:
+N : Le nombre de caracteres de l'arbre.
+Les complexites donnees sont les complexites en moyenne des algorithmes.
+
+1- Recherche(arbre, mot) : O(hauteur de l'arbre (log(N)), mesure: nombre de comparaison de caracters.
+2- ComptageMots(arbre) : O(N), mesure: nombre de comparaisons de caracteres.
+3- ListeMors(arbre) : O(N), mesure: nombre de comparaisons de caracteres.
+4- ComptageNil(Arbre) : O(N), mesure: nombre de comparaisons avec null.
+5- Hauteur(arbre) : O(log(N)), mesure: nombre de comparaisons avec null.
+6- ProfondeurMoyenne(arbre) : O(N), mesure: nombre de comparaisons avec EPSILON.
+7- Prefixe(arbre, mot) : O(log(N))
+8- Suppression(arbre, mot) : ~ O(Nlog(N)) ???
+9- Fusion(arbre1, arbre2) :  ~ O(Nlog(N)) 
+10- BriandaisVersHybride(arbre) : O(N)

@@ -9,6 +9,6 @@ Les complexites donnees sont les complexites en moyenne des algorithmes.
 5- Hauteur(arbre) : O(log(N)), mesure: nombre de comparaisons avec null.
 6- ProfondeurMoyenne(arbre) : O(N), mesure: nombre de comparaisons avec EPSILON.
 7- Prefixe(arbre, mot) : O(log(N))
-8- Suppression(arbre, mot) : ~ O(Nlog(N)) ???
-9- Fusion(arbre1, arbre2) :  ~ O(Nlog(N)) 
+8- Suppression(arbre, mot) : ~ O(N x log(N)) ???
+9- Fusion(arbre1, arbre2) :  ~ O(N x log(N)) 
 10- BriandaisVersHybride(arbre) : O(N)

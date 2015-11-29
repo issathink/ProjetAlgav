@@ -113,31 +113,51 @@ public class TestBriandais {
 		 * MethodesArbreBriandais.afficher(arbre); System.out.println(list);
 		 */
 
-		/*TrieHybride trie = MethodesArbreBriandais.briandaisVersTrie(arbre);
-		System.out.println(MethodesTrieHybride.listeMots(trie));
-		System.out.println(MethodesTrieHybride.comptageMots(trie));*/
-		ArbreBriandais dict = constuireOeuvreShakespeare();
+		/*
+		 * TrieHybride trie = MethodesArbreBriandais.briandaisVersTrie(arbre);
+		 * System.out.println(MethodesTrieHybride.listeMots(trie));
+		 * System.out.println(MethodesTrieHybride.comptageMots(trie));
+		 */
+		ArbreBriandais dict = constuctionParallele();
 		System.out.println(MethodesArbreBriandais.comptageMots(dict));
-		//MethodesTrieHybride.listeMots(dict);
+		// MethodesTrieHybride.listeMots(dict);
 		MethodesArbreBriandais.afficher(dict);
 	}
 
 	/*
-	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare.
+	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare
+	 * par ajout simple.
 	 */
-	public static ArbreBriandais constuireOeuvreShakespeare() {
+	public static ArbreBriandais constructionAjoutSimple() {
 		ArbreBriandais arbre = null;
 		File rep = new File("Shakespeare");
-		System.out.println("Nb de fichiers : " + rep);
 		File[] files = rep.listFiles();
-		System.out.println("Nb de fichiers : " + files.length);
+		List<String> list;
+
+		for (File file : files) {
+			list = Tools.getListOfString(file.getAbsolutePath());
+			for (String mot : list)
+				arbre = MethodesArbreBriandais.insertion(arbre, mot);
+		}
+
+		System.out.println("END of construction.");
+		return arbre;
+	}
+
+	/*
+	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare de
+	 * maniere parallele.
+	 */
+	public static ArbreBriandais constuctionParallele() {
+		ArbreBriandais arbre = null;
+		File rep = new File("Shakespeare");
+		File[] files = rep.listFiles();
 		ConstruireArbreFichier[] tabThreads = new ConstruireArbreFichier[files.length];
 		int i = 0;
 
-		for (File file : files) {
+		for (File file : files)
 			tabThreads[i++] = new ConstruireArbreFichier(file.getAbsolutePath());
-			System.out.println("Fichier : " + file);
-		}
+
 		/* On attends que les threads se terminent. */
 		try {
 			for (int j = 0; j < tabThreads.length; j++)
@@ -147,14 +167,12 @@ public class TestBriandais {
 			e.printStackTrace();
 		}
 
-		/* On fusionne tous les arbres. */
-
+		/* On fusionne les arbres. */
 		for (int j = 0; j < tabThreads.length; j++)
 			arbre = MethodesArbreBriandais.fusion(arbre,
 					tabThreads[j].getArbre());
 
 		System.out.println("END of construction.");
-
 		return arbre;
 	}
 

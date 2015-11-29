@@ -419,7 +419,12 @@ public class MethodesTrieHybride {
 
 			noeud.setFils(eps);
 			noeud.setSuivant(trieVersBriandais(t.getSup()));
-			briandais.setSuivant(noeud);
+			
+			ArbreBriandais cp = briandais;
+			while(cp.getSuivant() != null)
+				cp = cp.getSuivant();
+			
+			cp.setSuivant(noeud);
 
 			return briandais;
 		} else if (t.getArret() == Tools.EPSILON && t.getInf().estArbreVide()) {

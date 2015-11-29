@@ -43,15 +43,16 @@ public class TestTrieHybride {
 		for (String mot : list) {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
+		//MethodesArbreBriandais.affichageFormate(abr);
 		MethodesArbreBriandais.afficher(abr);
 		System.out.println("Nb mots : " + MethodesArbreBriandais.comptageMots(abr));
 		
-		Tools.fileDot(t, "TrieHybride");
+		/*Tools.fileDot(t, "TrieHybride");
 		Tools.commandDot("TrieHybride");
 		
 		Tools.fileDotBriandais(abr, "Briandais");
 		Tools.commandDot("Briandais");
-		
+		*/
 		//ArbreBriandais briandais = MethodesTrieHybride.trieVersBriandais(t);
 		
 		//System.out.println(t.getSup().getInf().getInf().getEq().getInf().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getEq().getArret());

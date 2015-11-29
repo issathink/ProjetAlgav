@@ -118,6 +118,8 @@ public class TestBriandais {
 		System.out.println(MethodesTrieHybride.comptageMots(trie));*/
 		ArbreBriandais dict = constuireOeuvreShakespeare();
 		System.out.println(MethodesArbreBriandais.comptageMots(dict));
+		//MethodesTrieHybride.listeMots(dict);
+		MethodesArbreBriandais.afficher(dict);
 	}
 
 	/*

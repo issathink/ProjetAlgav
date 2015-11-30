@@ -1,6 +1,8 @@
 package tries;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import tools.Tools;
 import briandais.ArbreBriandais;
@@ -24,14 +26,17 @@ public class MethodesTrieHybride {
 
 	/**** Ajouter mots du texte dans un TrieHybride ****/
 	public static TrieHybride construireTrie() {
-		int i = 0;
 		TrieHybride t = new TrieHybride();
-		ArrayList<String> tab_mots = Tools.getListOfString("exemple_base");
+		File rep = new File("Shakespeare");
+		File[] files = rep.listFiles();
+		List<String> list;
 
-		while (i < tab_mots.size()) {
-			ajoutMot(tab_mots.get(i), t);
-			i++;
+		for (File file : files) {
+			list = Tools.getListOfString(file.getAbsolutePath());
+			for (String mot : list)
+				ajoutMot(mot, t);
 		}
+
 		return t;
 	}
 
@@ -42,7 +47,7 @@ public class MethodesTrieHybride {
 			int cpt = 1;
 			t.setVal(mot.charAt(0));
 			if (mot.length() == 1) { // Si le mot ne fait qu'une lettre on met
-										// le flag arret ici
+				// le flag arret ici
 				t.setArret(true);
 				t.setNum();
 				return t;
@@ -55,7 +60,7 @@ public class MethodesTrieHybride {
 					t2.setNum();
 				} else
 					t2 = t2.getEq(); // On continue d'inserer le reste du mot
-										// juste en dessous
+				// juste en dessous
 				cpt++;
 			}
 			return t;
@@ -66,9 +71,9 @@ public class MethodesTrieHybride {
 			if (mot.charAt(0) > t.getVal()) {
 				t.setSup(ajoutMot(mot, t.getSup()));
 			} else {
-				if (mot.length() == 1) { // On est sur on mot du texte dej�
-											// inser� mais n'�tant pas forc�ment
-											// valide (arret = false)
+				if (mot.length() == 1) { // On est sur on mot du texte deja
+					// insere mais n'etant pas forcement
+					// valide (où arret valait false -> on le met a true)
 					t.setArret(true);
 					t.setNum();
 				} else {
@@ -95,6 +100,7 @@ public class MethodesTrieHybride {
 					|| recherche(t.getEq().getSup(), mot) || recherche(t
 					.getEq().getInf(), mot));
 		}
+
 		if (t.getVal() > mot.charAt(0)) {
 			if (!t.getInf().estArbreVide())
 				return recherche(t.getInf(), mot);
@@ -132,7 +138,7 @@ public class MethodesTrieHybride {
 		return cpt;
 	}
 
-	/***** Fonction listant les mots du TrieHybride dans l'ordre alphab�tique ****/
+	/***** Fonction listant les mots du TrieHybride dans l'ordre alphabetique ****/
 	public static ArrayList<String> listeMots(TrieHybride t) {
 		if (t.estArbreVide())
 			return null;
@@ -186,22 +192,42 @@ public class MethodesTrieHybride {
 
 	/***** Fonction donnant la hauteur de l'arbre *****/
 	public static int hauteur(TrieHybride t) {
+
 		int cpt = 0;
 		if (t.estArbreVide())
 			return 0;
 
-		cpt++;
-		int tmp = cpt, tmp2 = cpt, tmp3 = cpt;
+		/*
+		 * cpt++; int tmp = cpt, tmp2 = cpt, tmp3 = cpt;
+		 * 
+		 * if (!t.getInf().estArbreVide()) tmp += hauteur(t.getInf());
+		 * 
+		 * System.out.println("inf: " + t.getInf().getVal());
+		 * 
+		 * if (!t.getEq().estArbreVide()) tmp2 += hauteur(t.getEq());
+		 * 
+		 * System.out.println("Eq: " + t.getEq().getVal());
+		 * 
+		 * if (!t.getSup().estArbreVide()) tmp3 += hauteur(t.getSup());
+		 * 
+		 * System.out.println("sup: " + t.getSup().getVal());
+		 */
+
+		int inf = 0;
+		int sup = 0;
+		int eq = 0;
+
 		if (!t.getInf().estArbreVide())
-			tmp += hauteur(t.getInf());
-
+			inf = 1;
 		if (!t.getEq().estArbreVide())
-			tmp2 += hauteur(t.getEq());
-
+			eq = 1;
 		if (!t.getSup().estArbreVide())
-			tmp3 += hauteur(t.getSup());
+			sup = 1;
 
-		return Math.max(tmp, Math.max(tmp2, tmp3));
+		return Math.max(eq + hauteur(t.getEq()),
+				Math.max(inf + hauteur(t.getInf()), sup + hauteur(t.getSup())));
+
+		// return Math.max(tmp, Math.max(tmp2, tmp3));
 	}
 
 	/**** Fonction calculant la profondeur moyenne du TrieHybride ***/
@@ -305,23 +331,28 @@ public class MethodesTrieHybride {
 		pred = null;
 		next = null;
 		TrieHybride pere_suppr = suppr;
-		TrieHybride haut = null;
+		TrieHybride haut = t;
+		TrieHybride from = t;
 		TrieHybride save = new TrieHybride();
 
-		while (mot.length() - 1 > 0) { // -1 car on ne regarde pas la derniere
-										// lettre qui est celle du mot a
-										// supprimer
+		int n = 0;
+		if (mot.length() > 1)
+			n = 1;
+
+		while (mot.length() - n > 0) {
 
 			if (!t.getEq().getInf().estArbreVide()
 					|| !t.getEq().getSup().estArbreVide()) {
 				haut = t;
 			}
 			if (mot.charAt(0) < t.getVal()) {
+				from = t;
 				pred = t.getInf();
 				t = pred;
 				suppr = t;
 			} else {
 				if (mot.charAt(0) > t.getVal()) {
+					from = t;
 					next = t.getSup();
 					t = next;
 					suppr = t;
@@ -340,22 +371,114 @@ public class MethodesTrieHybride {
 			}
 		}
 
-		if (suppr.getEq().estArbreVide() && !suppr.getInf().estArbreVide()
-				|| !suppr.getSup().estArbreVide()) { // Si on est sur la racine
-														// sans fils en dessous
-			if (suppr.getId() != 0) {
-
-			} else {
-
-			}
-		}
-
 		boolean bool = false;
 		if (pere_suppr != null && suppr != null)
 			if (pere_suppr.getEq().getId() == suppr.getId()
 					&& (!pere_suppr.getInf().estArbreVide() || !pere_suppr
 							.getSup().estArbreVide()))
 				bool = true;
+
+		// Cas ou on retire le mot et n'a pas de pere Eq (on vient d'un Inf ou
+		// d'un Sup)
+		if ((from.getInf().getId() == pere_suppr.getId()
+				|| from.getSup().getId() == pere_suppr.getId() || (n == 0 && pere_suppr
+				.getId() == 0))
+				&& (pere_suppr.getArret() != Tools.EPSILON || n == 0)) {
+
+			if (pere_suppr.getId() != 0) { // Si on est pas sur la racine
+
+				int id = pere_suppr.getId();
+				if (hauteur(pere_suppr.getInf()) < hauteur(pere_suppr.getSup())) {
+					if (pere_suppr.getInf().estArbreVide()) {
+						if (haut.getSup().getId() == id)
+							haut.setSup(haut.getSup().getSup());
+						else
+							haut.setInf(haut.getSup().getSup());
+						return haut;
+					}
+					TrieHybride fg = pere_suppr.getInf();
+					pere_suppr = pere_suppr.getSup();
+					while (!pere_suppr.estArbreVide()) {
+						pere_suppr = pere_suppr.getInf(); // on ne peut pas
+															// aller a droite
+															// car
+						// les fils sont toujours de cle
+						// superieur a la cle de fg
+					}
+					pere_suppr.setSelf(fg);
+					if (haut.getSup().getId() == id)
+						haut.setSup(haut.getSup().getSup());
+					else
+						haut.setInf(haut.getInf().getSup());
+					return haut;
+				}
+
+				else {
+					if (pere_suppr.getSup().estArbreVide()) {
+						if (haut.getSup().getId() == id)
+							haut.setSup(haut.getSup().getInf());
+						else
+							haut.setInf(haut.getSup().getInf());
+						return haut;
+					}
+					TrieHybride fd = pere_suppr.getSup();
+					pere_suppr = pere_suppr.getInf().getSup();
+					while (!pere_suppr.estArbreVide()) {
+						pere_suppr = pere_suppr.getSup(); // on ne peut pas
+															// aller a droite
+															// car
+						// les fils sont toujours de cle
+						// superieur a la cle de fg
+					}
+					pere_suppr.setSelf(fd);
+					if (haut.getSup().getId() == id)
+						haut.setSup(haut.getSup().getSup());
+					else
+						haut.setInf(haut.getSup().getSup());
+					return haut;
+				}
+			}
+
+			else { // Si on est sur la racine
+				if (hauteur(pere_suppr.getInf()) < hauteur(pere_suppr.getSup())) {
+					if (pere_suppr.getInf().estArbreVide()) {
+						pere_suppr.setSelf(pere_suppr.getSup());
+						return pere_suppr;
+					}
+					TrieHybride fg = pere_suppr.getInf();
+					pere_suppr = pere_suppr.getSup();
+					while (!pere_suppr.estArbreVide()) {
+						pere_suppr = pere_suppr.getInf(); // on ne peut pas
+															// aller a droite
+															// car
+						// les fils sont toujours de cle
+						// superieur a la cle de fg
+					}
+					pere_suppr.setSelf(fg);
+					haut.setSelf(haut.getSup());
+					return haut;
+				}
+
+				else {
+					if (haut.getSup().estArbreVide()) {
+						haut.setSelf(pere_suppr.getInf());
+						return haut;
+					}
+					TrieHybride fd = pere_suppr.getSup();
+					pere_suppr = pere_suppr.getInf();
+					while (!pere_suppr.estArbreVide()) {
+						pere_suppr = pere_suppr.getSup(); // on ne peut pas
+															// aller a droite
+															// car
+						// les fils sont toujours de cle
+						// superieur a la cle de fg
+					}
+					pere_suppr.setSelf(fd);
+					haut.setSelf(haut.getInf());
+					return haut;
+				}
+			}
+		}
 
 		while (suppr.getArret() != Tools.EPSILON) {
 			eq = suppr.getEq();
@@ -368,7 +491,7 @@ public class MethodesTrieHybride {
 		suppr.setVal(Tools.FIN);
 		suppr = null;
 
-		if (haut != null && bool) {
+		if (bool && pere_suppr.getArret() != Tools.EPSILON) {
 
 			if (hauteur(save.getInf()) > hauteur(save.getSup())) { // equlibrage
 				TrieHybride fd = save.getSup();
@@ -376,8 +499,8 @@ public class MethodesTrieHybride {
 				haut = haut.getEq();
 				while (!haut.estArbreVide()) {
 					haut = haut.getSup(); // on ne peut pas aller a gauche car
-											// les fils sont toujours de cle
-											// superieur a la cle de fd
+					// les fils sont toujours de cle
+					// superieur a la cle de fd
 				}
 
 				haut.setSelf(fd);
@@ -387,8 +510,8 @@ public class MethodesTrieHybride {
 				haut = haut.getEq();
 				while (!haut.estArbreVide()) {
 					haut = haut.getInf(); // on ne peut pas aller a droite car
-											// les fils sont toujours de cle
-											// superieur a la cle de fg
+					// les fils sont toujours de cle
+					// superieur a la cle de fg
 				}
 				haut.setSelf(fg);
 			}
@@ -419,11 +542,11 @@ public class MethodesTrieHybride {
 
 			noeud.setFils(eps);
 			noeud.setSuivant(trieVersBriandais(t.getSup()));
-			
+
 			ArbreBriandais cp = briandais;
-			while(cp.getSuivant() != null)
+			while (cp.getSuivant() != null)
 				cp = cp.getSuivant();
-			
+
 			cp.setSuivant(noeud);
 
 			return briandais;
@@ -469,14 +592,20 @@ public class MethodesTrieHybride {
 
 	/****** Fonction d'insertion suivie d'un potentiel reequilibrage ****/
 	public static TrieHybride triEquilibre() {
-		int i = 0;
 		TrieHybride t = new TrieHybride();
-		ArrayList<String> tab_mots = Tools.getListOfString("exemple_base");
+		File rep = new File("Shakespeare");
+		File[] files = rep.listFiles();
+		List<String> list;
 
-		while (i < tab_mots.size()) {
-			ajoutMotReequilibre(tab_mots.get(i), t, null, null);
-			i++;
+		for (File file : files) {
+			list = Tools.getListOfString(file.getAbsolutePath());
+			for (String mot : list) {
+				//ajoutMot(mot, t);
+				// System.out.println("hauteur " + hauteur(t));
+				ajoutMotReequilibre(mot, t, null, null);
+			}
 		}
+
 		return t;
 	}
 
@@ -491,7 +620,7 @@ public class MethodesTrieHybride {
 			int cpt = 1;
 			t.setVal(mot.charAt(0));
 			if (mot.length() == 1) { // Si le mot ne fait qu'une lettre on met
-										// le flag arret ici
+				// leflag arret ici
 				t.setArret(true);
 				t.setNum();
 				return t;
@@ -503,12 +632,11 @@ public class MethodesTrieHybride {
 					t2.setArret(true);
 					t2.setNum();
 				} else
-					t2 = t2.getEq(); // On continue d'inserer le reste du mot
+					t2 = t2.getEq(); // On continue d'inserer le reste du mot //
 										// juste en dessous
 				cpt++;
 			}
 
-			/***** Ici le reequilibrage ****/
 			if (gd_pere != null
 					&& (hauteur(pere.getEq()) < hauteur(pere.getInf()) || hauteur(pere
 							.getEq()) < hauteur(pere.getSup()))) {
@@ -535,7 +663,6 @@ public class MethodesTrieHybride {
 				}
 				return null;
 			}
-			/***** Fin du reequilibrage ****/
 
 			return t;
 
@@ -546,10 +673,10 @@ public class MethodesTrieHybride {
 			if (mot.charAt(0) > t.getVal()) {
 				t.setSup(ajoutMotReequilibre(mot, t.getSup(), t, gd_pere));
 			} else {
-				if (mot.length() == 1) { // On est sur on mot du texte deja
+				if (mot.length() == 1) { // On est sur on mot du texte deja //
 											// insere mais n'etant pas forcement
-											// valide (arret = false)
-					t.setArret(true);
+											// // valide (arret = false)
+											// t.setArret(true);
 					t.setNum();
 				} else {
 					mot = mot.substring(1);
@@ -559,5 +686,44 @@ public class MethodesTrieHybride {
 		}
 		return t;
 	}
+
+	/* Equilibre le TrieHybride si besoin */
+	/*
+	 * private static TrieHybride equilibrage(TrieHybride t) { int hauteurInff =
+	 * hauteur(t.getInf()); int hauteurSupp = hauteur(t.getSup());
+	 * 
+	 * if (Math.abs(hauteurInff - hauteurSupp) <= 1) return t;
+	 * 
+	 * int hngg = 0; int hngd = 0; int hndg = 0; int hndd = 0;
+	 * 
+	 * if (!t.getInf().estArbreVide()) { hngg = hauteur(t.getInf().getInf());
+	 * hngd = hauteur(t.getInf().getSup()); } if (!t.getSup().estArbreVide()) {
+	 * hndg = hauteur(t.getSup().getInf()); hndd = hauteur(t.getSup().getSup());
+	 * }
+	 * 
+	 * if ((hauteurInff - hauteurSupp) >= 2) { if (hngg > hngd) return
+	 * rotationDroite(t); else { TrieHybride newInf =
+	 * rotationGauche(t.getInf()); TrieHybride newTh2 = new
+	 * TrieHybride(t.getVal(), t.getArret(), newInf, t.getEq(), t.getSup());
+	 * return rotationDroite(newTh2); } } else if (hauteurInff - hauteurSupp <=
+	 * -2) { if (hndd > hndg) return rotationGauche(t); else { TrieHybride
+	 * newSup = rotationDroite(t.getSup()); TrieHybride newTh2 = new
+	 * TrieHybride(t.getVal(), t.getArret(), t.getInf(), t.getEq(), newSup);
+	 * return rotationGauche(newTh2); } } else { return t; } }
+	 * 
+	 * private static TrieHybride rotationDroite(TrieHybride t) { if
+	 * (t.estArbreVide()) return t; if (t.getInf().estArbreVide()) return t;
+	 * TrieHybride inff = t.getInf(); TrieHybride suppDeInff = inff.getSup();
+	 * return new TrieHybride(inff.getVal(), inff.getArret(), inff.getInf(),
+	 * inff.getEq(), new TrieHybride(t.getVal(), t.getArret(), suppDeInff,
+	 * t.getEq(), t.getSup())); }
+	 * 
+	 * private static TrieHybride rotationGauche(TrieHybride t) { if
+	 * (t.estArbreVide()) return t; if (t.getSup().estArbreVide()) return t;
+	 * TrieHybride supp = t.getSup(); TrieHybride inffDeSupp = supp.getInf();
+	 * return new TrieHybride(supp.getVal(), supp.getArret(), new TrieHybride(
+	 * t.getVal(), t.getArret(), t.getInf(), t.getEq(), inffDeSupp),
+	 * supp.getEq(), supp.getSup()); }
+	 */
 
 }

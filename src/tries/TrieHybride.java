@@ -24,6 +24,14 @@ public class TrieHybride {
 		this.val = Tools.FIN;
 		num_mot = -1;
 	}
+	
+	public TrieHybride(char val, char arret, TrieHybride inf, TrieHybride eq, TrieHybride sup){
+		this.val = val;
+		this.arret = arret;
+		this.inf = inf;
+		this.eq = eq;
+		this.sup = sup;
+	}
 
 	public void setSelf(TrieHybride t){  //Recopie d'un arbre sur soit
 		id = t.getId();

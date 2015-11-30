@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.Chrono;
 import tools.ConstruireArbreFichier;
 import tools.Tools;
 import tries.MethodesTrieHybride;
@@ -15,12 +16,23 @@ public class TestBriandais {
 
 	public static void main(String[] args) {
 
-		ArrayList<String> list = Tools.getListOfString("exemple_base");
+		Chrono chrono = new Chrono();
+		
+		chrono.start();
+		ArbreBriandais arbre = constructionAjoutSimple();
+		/*ArrayList<String> list = Tools.getListOfString("exemple_base");
 		ArbreBriandais arbre = null;
 
 		for (String mot : list) {
 			arbre = MethodesArbreBriandais.insertion(arbre, mot);
-		}
+		}*/
+		chrono.stop();
+		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
+		System.out.println(MethodesArbreBriandais.comptageNil(arbre));
+		chrono.start();
+		System.out.println(MethodesArbreBriandais.hauteur(arbre));
+		chrono.stop();
+		System.out.println(MethodesArbreBriandais.profondeurMoyenne(arbre));
 
 		/*
 		 * System.out.println("Mots de l'arbre : " +
@@ -118,10 +130,10 @@ public class TestBriandais {
 		 * System.out.println(MethodesTrieHybride.listeMots(trie));
 		 * System.out.println(MethodesTrieHybride.comptageMots(trie));
 		 */
-		ArbreBriandais dict = constuctionParallele();
+		/*ArbreBriandais dict = constuctionParallele();
 		System.out.println(MethodesArbreBriandais.comptageMots(dict));
 		// MethodesTrieHybride.listeMots(dict);
-		MethodesArbreBriandais.afficher(dict);
+		MethodesArbreBriandais.afficher(dict);*/
 	}
 
 	/*

@@ -2,6 +2,7 @@ package test;
 
 import java.util.ArrayList;
 
+import tools.Chrono;
 import tools.Tools;
 import tries.MethodesTrieHybride;
 import tries.TrieHybride;
@@ -12,7 +13,11 @@ public class TestTrieHybride {
 	
 	public static void main(String []args){
 		
-		TrieHybride t = MethodesTrieHybride.construireTrie(); // MethodesTrieHybride.triEquilibre();
+		Chrono chrono = new Chrono();
+		
+		chrono.start();
+		TrieHybride t = MethodesTrieHybride.triEquilibre(); // MethodesTrieHybride.triEquilibre();
+		chrono.stop();
 		
 		/*ArrayList<String> tab_mots = Tools.getListOfString("exemple_base");
 		for(String mot : tab_mots){
@@ -25,7 +30,11 @@ public class TestTrieHybride {
 		for(String mot : l)
 			System.out.println(mot);*/
 		
-		System.out.println(MethodesTrieHybride.comptageNil(t));
+		chrono.start();
+		System.out.println(MethodesTrieHybride.hauteur(t));
+		chrono.stop();
+		
+		/*System.out.println(MethodesTrieHybride.comptageNil(t));
 		
 		System.out.println(MethodesTrieHybride.hauteur(t));
 		
@@ -45,7 +54,7 @@ public class TestTrieHybride {
 		}
 		//MethodesArbreBriandais.affichageFormate(abr);
 		MethodesArbreBriandais.afficher(abr);
-		System.out.println("Nb mots : " + MethodesArbreBriandais.comptageMots(abr));
+		System.out.println("Nb mots : " + MethodesArbreBriandais.comptageMots(abr));*/
 		
 		/*Tools.fileDot(t, "TrieHybride");
 		Tools.commandDot("TrieHybride");

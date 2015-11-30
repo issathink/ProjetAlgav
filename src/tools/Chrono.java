@@ -13,16 +13,17 @@ import java.util.Date;
 public class Chrono {
 	private long time;
 
-	public Chrono() {
+	public void start() {
 		Date d = new Date();
 		time = d.getTime();
 	}
-
+	
 	public void stop() {
 		Date d = new Date();
 		long timeFin = d.getTime();
 		long interv = timeFin - time;
 		affiche(interv);
+		time = 0;
 	}
 
 	public void affiche(long millis) {

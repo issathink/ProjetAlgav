@@ -26,11 +26,17 @@ public class TrieHybride {
 	}
 	
 	public TrieHybride(char val, char arret, TrieHybride inf, TrieHybride eq, TrieHybride sup){
+		this.id = id_gene;
+		id_gene++;
 		this.val = val;
 		this.arret = arret;
 		this.inf = inf;
 		this.eq = eq;
 		this.sup = sup;
+		if(arret == Tools.EPSILON)
+		num_mot = getNumMot();
+		else
+			num_mot = -1;
 	}
 
 	public void setSelf(TrieHybride t){  //Recopie d'un arbre sur soit

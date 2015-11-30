@@ -17,23 +17,49 @@ public class TestBriandais {
 	public static void main(String[] args) {
 
 		Chrono chrono = new Chrono();
-		
-		chrono.start();
-		ArbreBriandais arbre = constructionAjoutSimple();
-		/*ArrayList<String> list = Tools.getListOfString("exemple_base");
-		ArbreBriandais arbre = null;
 
-		for (String mot : list) {
-			arbre = MethodesArbreBriandais.insertion(arbre, mot);
-		}*/
-		chrono.stop();
+		// chrono.start();
+		ArbreBriandais arbre = constructionAjoutSimple();
+		/*
+		 * ArrayList<String> list = Tools.getListOfString("exemple_base");
+		 * ArbreBriandais arbre = null;
+		 * 
+		 * for (String mot : list) { arbre =
+		 * MethodesArbreBriandais.insertion(arbre, mot); }
+		 */
+		// chrono.stop();
+
+		// chrono.start();
+		/*long startTime = System.nanoTime();
+
+		System.out.println(MethodesArbreBriandais.recherche(arbre,
+				"wagtail"));
+		long stopTime = System.nanoTime();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("time : " + elapsedTime);*/
+		
+		
+		MethodesArbreBriandais.listeMots(arbre);
+
+		// chrono.stop();
 		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
 		System.out.println(MethodesArbreBriandais.comptageNil(arbre));
-		chrono.start();
-		System.out.println(MethodesArbreBriandais.hauteur(arbre));
-		chrono.stop();
+		System.out.println("Taille "+MethodesArbreBriandais.hauteur(arbre));
 		System.out.println(MethodesArbreBriandais.profondeurMoyenne(arbre));
 
+		long startTime = System.nanoTime();
+
+		//MethodesArbreBriandais.prefixe(arbre, "d");
+		MethodesArbreBriandais.suppression(arbre, "acquaintance");
+		long stopTime = System.nanoTime();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("time : " + elapsedTime);
+		
+		chrono.start();
+		constuctionParallele();
+		chrono.stop();
+	
+		
 		/*
 		 * System.out.println("Mots de l'arbre : " +
 		 * MethodesArbreBriandais.comptageMots(arbre));
@@ -130,10 +156,12 @@ public class TestBriandais {
 		 * System.out.println(MethodesTrieHybride.listeMots(trie));
 		 * System.out.println(MethodesTrieHybride.comptageMots(trie));
 		 */
-		/*ArbreBriandais dict = constuctionParallele();
-		System.out.println(MethodesArbreBriandais.comptageMots(dict));
-		// MethodesTrieHybride.listeMots(dict);
-		MethodesArbreBriandais.afficher(dict);*/
+		/*
+		 * ArbreBriandais dict = constuctionParallele();
+		 * System.out.println(MethodesArbreBriandais.comptageMots(dict)); //
+		 * MethodesTrieHybride.listeMots(dict);
+		 * MethodesArbreBriandais.afficher(dict);
+		 */
 	}
 
 	/*
@@ -185,6 +213,8 @@ public class TestBriandais {
 					tabThreads[j].getArbre());
 
 		System.out.println("END of construction.");
+		
+		
 		return arbre;
 	}
 

@@ -18,50 +18,92 @@ public class TestBriandais {
 
 		Chrono chrono = new Chrono();
 
-		// chrono.start();
-		ArbreBriandais arbre = constructionAjoutSimple();
-		/*
-		 * ArrayList<String> list = Tools.getListOfString("exemple_base");
-		 * ArbreBriandais arbre = null;
-		 * 
-		 * for (String mot : list) { arbre =
-		 * MethodesArbreBriandais.insertion(arbre, mot); }
-		 */
-		// chrono.stop();
-
-		// chrono.start();
-		/*long startTime = System.nanoTime();
-
-		System.out.println(MethodesArbreBriandais.recherche(arbre,
-				"wagtail"));
-		long stopTime = System.nanoTime();
-		long elapsedTime = stopTime - startTime;
-		System.out.println("time : " + elapsedTime);*/
-		
-		
-		MethodesArbreBriandais.listeMots(arbre);
-
-		// chrono.stop();
-		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
-		System.out.println(MethodesArbreBriandais.comptageNil(arbre));
-		System.out.println("Taille "+MethodesArbreBriandais.hauteur(arbre));
-		System.out.println(MethodesArbreBriandais.profondeurMoyenne(arbre));
-
-		long startTime = System.nanoTime();
-
-		//MethodesArbreBriandais.prefixe(arbre, "d");
-		MethodesArbreBriandais.suppression(arbre, "acquaintance");
-		long stopTime = System.nanoTime();
-		long elapsedTime = stopTime - startTime;
-		System.out.println("time : " + elapsedTime);
-		
+		/***************** Construction par ajout simple ********************/
 		chrono.start();
-		constuctionParallele();
+		System.out.println("\nConstruction Simple: ");
+		ArbreBriandais arbre = constructionAjoutSimple();
 		chrono.stop();
-	
+
+		/***************** Recherche ****************************************/
+		long startTime = System.nanoTime();
+		System.out.println("\nRecherche: ");
+		System.out.println(MethodesArbreBriandais.recherche(arbre, "wagtail"));
+		long stopTime = System.nanoTime();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("Time : " + elapsedTime + " ns");
 		
+		/**************** Construction Parallele ****************************/
+		/*System.out.println("\nConstruction Parallele: ");
+		chrono.start();
+		arbre = constuctionParallele();
+		chrono.stop();*/
+		
+		/**************** Comptage mots *************************************/
+		chrono.start();
+		System.out.println("\nComptage mots: ");
+		System.out.println(MethodesArbreBriandais.comptageMots(arbre));
+		chrono.stop();
+		
+		/**************** Comptage Nil **************************************/
+		chrono.start();
+		System.out.println("\nComptage Nil: ");
+		System.out.println(MethodesArbreBriandais.comptageNil(arbre));
+		chrono.stop();
+		
+		/**************** Hauteur *******************************************/
+		System.out.println("\nHauteur: ");
+		startTime = System.nanoTime();
+		MethodesArbreBriandais.hauteur(arbre);
+		stopTime = System.nanoTime();
+		elapsedTime = stopTime - startTime;
+		System.out.println("Time : " + elapsedTime + " ns");
+		 
+		
+		/**************** Profondeur moyenne ********************************/
+		System.out.println("\nProfondeur moyenne: ");
+		chrono.start();
+		System.out.println(MethodesArbreBriandais.profondeurMoyenne(arbre));
+		chrono.stop();
+		
+		
+		
+		/**************** Construire exemple de base ************************/
+		System.out.println("\nConstruire exemple de base: ");
+		List<String> list = Tools.getListOfString("exemple_base");
+		startTime = System.nanoTime();
+		stopTime = System.nanoTime();
+		ArbreBriandais arbreCEB = null;
+		for(String mot: list)
+			arbreCEB = MethodesArbreBriandais.insertion(arbreCEB, mot);
+		elapsedTime = stopTime - startTime;
+		System.out.println("Time : " + elapsedTime + " ns");
+		/**************** Decommenter ces lignes pour generer un visuel ****/
+		/*Tools.fileDotBriandais(arbre, "Briandais");
+		Tools.commandDot("Briandais");*/
+		
+		
+
 		/*
-		 * System.out.println("Mots de l'arbre : " +
+		 * MethodesArbreBriandais.listeMots(arbre);
+		 * 
+		 * // chrono.stop();
+		 * System.out.println(MethodesArbreBriandais.comptageMots(arbre));
+		 * System.out.println(MethodesArbreBriandais.comptageNil(arbre));
+		 * System.out.println("Taille "+MethodesArbreBriandais.hauteur(arbre));
+		 * System.out.println("Profondeur : " +
+		 * 
+		 * 
+		 * long startTime = System.nanoTime();
+		 * 
+		 * //MethodesArbreBriandais.prefixe(arbre, "d");
+		 * MethodesArbreBriandais.suppression(arbre, "acquaintance"); long
+		 * stopTime = System.nanoTime(); long elapsedTime = stopTime -
+		 * startTime; System.out.println("time : " + elapsedTime);
+		 * 
+		 * chrono.start(); constuctionParallele(); chrono.stop();
+		 * 
+		 * 
+		 * /* System.out.println("Mots de l'arbre : " +
 		 * MethodesArbreBriandais.comptageMots(arbre));
 		 */
 
@@ -162,6 +204,15 @@ public class TestBriandais {
 		 * MethodesTrieHybride.listeMots(dict);
 		 * MethodesArbreBriandais.afficher(dict);
 		 */
+
+		/*ArrayList<String> list = Tools.getListOfString("exemple_base");
+		ArbreBriandais arbre = null;
+
+		for (String mot : list)
+			arbre = MethodesArbreBriandais.insertion(arbre, mot);
+
+		Tools.fileDotBriandais(arbre, "Briandais");
+		Tools.commandDot("Briandais");*/
 	}
 
 	/*
@@ -180,7 +231,6 @@ public class TestBriandais {
 				arbre = MethodesArbreBriandais.insertion(arbre, mot);
 		}
 
-		System.out.println("END of construction.");
 		return arbre;
 	}
 
@@ -213,8 +263,7 @@ public class TestBriandais {
 					tabThreads[j].getArbre());
 
 		System.out.println("END of construction.");
-		
-		
+
 		return arbre;
 	}
 

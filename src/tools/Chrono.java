@@ -47,7 +47,7 @@ public class Chrono {
 			heures = minutes / 60;
 			m = minutes - 60 * heures;
 			System.out.println("temps ecoule : " + heures + " h " + m + " mn "
-					+ s + " s " + ms + " millisecondes");
+					+ s + " s " + ms + " ms");
 			return;
 		} else {
 			System.out.println("temps ecoule : " + minutes + " mn " + s + " s "

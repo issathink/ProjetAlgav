@@ -8,21 +8,14 @@ import tools.Tools;
 import briandais.ArbreBriandais;
 
 public class MethodesTrieHybride {
-
-	/*
-	 * File repertoire=new File("./Text/Shakespeare/");// ici le repertoire qui
-	 * contient tous les fichiers String [] files=repertoire.list();// attention
-	 * ici recupere le nom du fichier avec le .txt a la fin
-	 * 
-	 * for(int i=1;i<files.length;i++){
-	 * motRecup=CreationFichier.recupMotFichierShakespeare(files[i]);// motRecup
-	 * Arraylist<String>
-	 * 
-	 * for (int j=0;j<motRecup.size();j++){ abrB1.ajout(motRecup.get(j)); }
-	 * 
-	 * 
-	 * }
-	 */
+	
+	public static TrieHybride construireExempleBase() {
+		TrieHybride t = new TrieHybride();
+		List<String> list = Tools.getListOfString("exemple_base");
+		for (String mot : list)
+			ajoutMot(mot, t);	
+		return t;
+	}
 
 	/**** Ajouter mots du texte dans un TrieHybride ****/
 	public static TrieHybride construireTrie() {

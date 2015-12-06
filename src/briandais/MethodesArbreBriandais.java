@@ -306,7 +306,7 @@ public class MethodesArbreBriandais {
 		if (arbre == null)
 			return 0;
 
-		return 1 + Integer.max(hauteur(arbre.getFils()),
+		return 1 + Math.max(hauteur(arbre.getFils()),
 				hauteur(arbre.getSuivant()));
 	}
 

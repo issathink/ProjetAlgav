@@ -3,7 +3,7 @@ Authors: Bilal & Issa
 
 Prerequisites (it's cool if you have these) : 
 
-1. Java 1.8 (or any other Java version > 1.2)
+1. Java >= 1.5
 
 2. [Optional] Graphviz installed ('dot' command). If you're like us
 	and need to see your real tree, then it worth it.

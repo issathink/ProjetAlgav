@@ -8,8 +8,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import briandais.ArbreBriandais;
+import briandais.MethodesArbreBriandais;
 import tries.TrieHybride;
 
 public class Tools {
@@ -105,6 +107,68 @@ public class Tools {
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare
+	 * par ajout simple.
+	 */
+	public static ArbreBriandais constructionAjoutSimple() {
+		ArbreBriandais arbre = null;
+		File rep = new File("Shakespear");
+		File[] files = rep.listFiles();
+		List<String> list;
+
+		if (files == null)
+			throw new RuntimeException(
+					"Veuillez placer le repertoire contenant les oeuvres de Shakespeare a la racine du projet.");
+
+		for (File file : files) {
+			list = Tools.getListOfString(file.getAbsolutePath());
+			for (String mot : list)
+				arbre = MethodesArbreBriandais.insertion(arbre, mot);
+		}
+
+		return arbre;
+	}
+
+	/*
+	 * Construit le dictionnaire contenant l'ensemble des mots de Shakespeare de
+	 * maniere parallele.
+	 */
+	public static ArbreBriandais constuctionParallele() {
+		ArbreBriandais arbre = null;
+		File rep = new File("Shakespeare");
+		File[] files = rep.listFiles();
+		
+		if (files == null)
+			throw new RuntimeException(
+					"Veuillez placer le repertoire contenant les oeuvres de Shakespeare a la racine du projet.");
+
+		ConstruireArbreFichier[] tabThreads = new ConstruireArbreFichier[files.length];
+		int i = 0;
+		
+		for (File file : files)
+			tabThreads[i++] = new ConstruireArbreFichier(file.getAbsolutePath());
+
+		/* On attends que les threads se terminent. */
+		try {
+			for (int j = 0; j < tabThreads.length; j++)
+				tabThreads[j].join();
+		} catch (InterruptedException e) {
+			System.out.println("Je ne devais pas etre interrompu.");
+			e.printStackTrace();
+		}
+
+		/* On fusionne les arbres. */
+		for (int j = 0; j < tabThreads.length; j++)
+			arbre = MethodesArbreBriandais.fusion(arbre,
+					tabThreads[j].getArbre());
+
+		System.out.println("END of construction.");
+
+		return arbre;
+	}
+
 
 	public static String getGraphic(TrieHybride th) {
 		String s = "digraph G {\n";

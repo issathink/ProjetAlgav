@@ -1,24 +1,26 @@
 package test;
 
+import tools.Chrono;
+import tries.MethodesTrieHybride;
+import tries.TrieHybride;
+
 
 public class TestTrieHybride {
 
 	public static void main(String []args){
 
-		/*Chrono chrono = new Chrono();*/
+		Chrono chrono = new Chrono();
 
-		/******* Construction ExempleDeBase *******/
-		/*chrono.start();
-		TrieHybride t = MethodesTrieHybride.construireExempleBase();
-		chrono.stop();*/
 
 		/******* Construction simple *******/
-		/*chrono.start();
+		chrono.start();
+		System.out.println("\nConstruction Simple: ");
 		TrieHybride t = MethodesTrieHybride.construireTrie();
-		chrono.stop();*/
+		chrono.stop();
 
 		/******* Construction equilibree *******/
 		/*chrono.start();
+		 System.out.println("\nConstruction Equilibree: ");
 		TrieHybride t = MethodesTrieHybride.trieEquilibre();
 		chrono.stop();*/
 
@@ -34,18 +36,21 @@ public class TestTrieHybride {
 
 		/******* Recherche Shakespeare **************/
 		/*long startTime = System.nanoTime();
+		System.out.println("\nRecherche: ");
 		System.out.println(MethodesTrieHybride.recherche(t, "acquaintance"));
 		long stopTime = System.nanoTime();
 		long elapsedTime = stopTime - startTime;
 		System.out.println("time : "+elapsedTime);*/
 
 		/******* CountWords **********************/
-		/*chrono.start();
+		chrono.start();
+		System.out.println("\nComptageMots: ");
 		System.out.println("Nombre de mots : "+MethodesTrieHybride.comptageMots(t)); 
-		chrono.stop();*/
+		chrono.stop();
 
 		/******* ListWords *************************/
 		/*chrono.start();
+		System.out.println("\nListerMots: ");
 		ArrayList<String> l = MethodesTrieHybride.listeMots(t);
 		chrono.stop();
 		for(String mot : l)
@@ -53,40 +58,52 @@ public class TestTrieHybride {
 
 
 		/******* CountNil *************************/
-		/*chrono.start();
+		chrono.start();
+		System.out.println("\nComptageNbNil: ");
 	  	System.out.println("Il y a " + MethodesTrieHybride.comptageNil(t) + " Nils");
-		chrono.stop();*/
+		chrono.stop();
 
 		/******* Height *************************/
-		/*chrono.start();
+		chrono.start();
+		System.out.println("\nHauteur: ");
 		System.out.println("La hauteur est : " + MethodesTrieHybride.hauteur(t));
-		chrono.stop();*/
+		chrono.stop();
 
 		/******* DepthAverage *************************/
-		/*chrono.start();
+		chrono.start();
+		System.out.println("\nProfondeurMoyenne: ");
 		System.out.println("La profondeur moyenne est : " + MethodesTrieHybride.profondeurMoyenne(t));
-		chrono.stop();*/
+		chrono.stop();
 
 		/******* Prefixe *************************/
 		/*long startTime = System.nanoTime();
-		System.out.println("Il y a "MethodesTrieHybride.prefix(t, "d") + " mot(s) le contenant");
+		System.out.println("\nComptePrefixe: ");
+		System.out.println("Il y a " + MethodesTrieHybride.prefix(t, "d") + " mot(s) le contenant");
 		long stopTime = System.nanoTime();
 		long elapsedTime = stopTime - startTime;
 		System.out.println("time : "+elapsedTime);*/
 
 		/******* Suppression *************************/
 		/*chrono.start();
+		System.out.println("\nSuppression: ");
 		MethodesTrieHybride.suppression(t, "acquaintance");
 		chrono.stop();*/
 
 		/******* Transformation TrieVersBriandais *************************/
 		/*chrono.start();
+		System.out.println("\nTransformation: ");
 		ArbreBriandais abr = MethodesTrieHybride.trieVersBriandais(t);
 		chrono.stop();*/
 
 		//MethodesArbreBriandais.affichageFormate(abr);
 		//MethodesArbreBriandais.afficher(abr);
 		//System.out.println("Nb mots : " + MethodesArbreBriandais.comptageMots(abr));
+		
+		/******* Construction ExempleDeBase *******/
+		/*chrono.start();
+		System.out.println("\nConstruction exempleDeBase: ");
+		TrieHybride t = MethodesTrieHybride.construireExempleBase();
+		chrono.stop();*/
 
 		/*********** Generation du visuel **************/
 		/*Tools.fileDot(t, "TrieHybride");

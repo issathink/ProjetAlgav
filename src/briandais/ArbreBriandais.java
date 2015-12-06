@@ -2,7 +2,7 @@ package briandais;
 
 /*
  * La structre de l'arbre de la Briandais.
- * Epsilon est represente par : '!'
+ * Epsilon est represente par : '#'
  */
 public class ArbreBriandais {
 

@@ -9,5 +9,6 @@ Prerequisites (it's cool if you have these) :
 3. You want know more about Hybrid Trie and/or 'La Briandais' tree.
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$ LICENCE $$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
 Feel free to do whatever you want with this code. We'll be glad if 
 you give us credit (or don't who cares by the way).
